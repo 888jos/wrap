@@ -1,5 +1,160 @@
 /* Signal market intelligence screens */
 
+// Import Progress Modal with animated steps
+function ImportProgressModal({ appName, appIcon, steps, onClose }) {
+  return (
+    <div style={{
+      position: 'fixed',
+      inset: 0,
+      background: 'rgba(0, 0, 0, 0.5)',
+      backdropFilter: 'blur(4px)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 9999,
+      animation: 'fadeIn 0.2s ease-out',
+    }}>
+      <div className="card" style={{
+        width: 480,
+        maxWidth: '90vw',
+        padding: 32,
+        animation: 'slideUp 0.3s ease-out',
+      }}>
+        {/* App Header */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 28 }}>
+          {appIcon ? (
+            <div style={{
+              width: 56,
+              height: 56,
+              borderRadius: 12,
+              background: appIcon.startsWith('http') ? `url(${appIcon})` : 'var(--accent)',
+              backgroundSize: 'cover',
+              flexShrink: 0,
+            }} />
+          ) : (
+            <div style={{
+              width: 56,
+              height: 56,
+              borderRadius: 12,
+              background: 'var(--accent)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 24,
+              fontWeight: 700,
+              color: 'var(--bg-1)',
+              flexShrink: 0,
+            }}>
+              {appName?.charAt(0) || 'A'}
+            </div>
+          )}
+          <div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-1)' }}>
+              {appName || 'Importing App'}
+            </div>
+            <div style={{ fontSize: 13, color: 'var(--text-3)', marginTop: 2 }}>
+              Fetching metadata from store
+            </div>
+          </div>
+        </div>
+
+        {/* Progress Steps */}
+        <div style={{ display: 'grid', gap: 14 }}>
+          {steps.map((step, index) => (
+            <div
+              key={step.label}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                padding: '10px 12px',
+                borderRadius: 8,
+                background: step.status === 'completed' ? 'var(--bg-2)' : 'transparent',
+                transition: 'all 0.3s ease',
+                animation: step.status !== 'pending' ? `fadeInStep 0.3s ease-out ${index * 0.1}s backwards` : 'none',
+              }}
+            >
+              {/* Checkmark icon */}
+              <div style={{
+                width: 20,
+                height: 20,
+                borderRadius: '50%',
+                background: step.status === 'completed' ? '#22c55e' : step.status === 'loading' ? 'var(--accent)' : 'var(--border-2)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                transition: 'all 0.3s ease',
+              }}>
+                {step.status === 'completed' ? (
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <path d="M10 3L4.5 8.5L2 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                ) : step.status === 'loading' ? (
+                  <div style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: '50%',
+                    background: 'var(--bg-1)',
+                    animation: 'pulse 1.5s ease-in-out infinite',
+                  }} />
+                ) : null}
+              </div>
+
+              {/* Step label */}
+              <div style={{
+                fontSize: 14,
+                fontWeight: step.status !== 'pending' ? 500 : 400,
+                color: step.status === 'completed' ? 'var(--text-1)' : step.status === 'loading' ? 'var(--text-1)' : 'var(--text-3)',
+                transition: 'all 0.3s ease',
+              }}>
+                {step.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes fadeInStep {
+          from {
+            opacity: 0;
+            transform: translateX(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.5;
+            transform: scale(0.8);
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
+
 const WRAP_SEED_CATALOG = [
   ['Idle Flight Manager', 'INFINITY GAMES, LDA', 'games'],
   ['CortiFree: Stress & Sleep', 'Solstys I.T.', 'health-fitness'],
@@ -2215,6 +2370,15 @@ function WrapOnboardingScreen({ setRoute }) {
   const [appUrl, setAppUrl] = React.useState('');
   const [connectedApp, setConnectedApp] = React.useState(null);
   const [loadingConnection, setLoadingConnection] = React.useState(false);
+  const [importSteps, setImportSteps] = React.useState([
+    { label: 'Connecting to App Store', status: 'pending' },
+    { label: 'Fetching app metadata', status: 'pending' },
+    { label: 'Loading app icon and screenshots', status: 'pending' },
+    { label: 'Analyzing app description', status: 'pending' },
+    { label: 'Extracting keywords and categories', status: 'pending' },
+    { label: 'Importing reviews and ratings', status: 'pending' },
+    { label: 'Finalizing import', status: 'pending' },
+  ]);
   const [ideaName, setIdeaName] = React.useState('');
   const [ideaText, setIdeaText] = React.useState('');
   const [ideaCategory, setIdeaCategory] = React.useState(APP_CATEGORIES[0]?.id || 'productivity');
@@ -2239,8 +2403,38 @@ function WrapOnboardingScreen({ setRoute }) {
     if (!appUrl.trim()) return;
     setLoadingConnection(true);
     setError('');
+
+    // Reset steps
+    setImportSteps([
+      { label: 'Connecting to App Store', status: 'loading' },
+      { label: 'Fetching app metadata', status: 'pending' },
+      { label: 'Loading app icon and screenshots', status: 'pending' },
+      { label: 'Analyzing app description', status: 'pending' },
+      { label: 'Extracting keywords and categories', status: 'pending' },
+      { label: 'Importing reviews and ratings', status: 'pending' },
+      { label: 'Finalizing import', status: 'pending' },
+    ]);
+
+    // Animate steps progressively
+    const animateSteps = async () => {
+      const delays = [300, 500, 400, 450, 400, 500, 300];
+      for (let i = 0; i < delays.length; i++) {
+        await new Promise(resolve => setTimeout(resolve, delays[i]));
+        setImportSteps(prev => prev.map((step, idx) => {
+          if (idx < i) return { ...step, status: 'completed' };
+          if (idx === i) return { ...step, status: 'loading' };
+          return step;
+        }));
+      }
+      // Mark last step as completed
+      await new Promise(resolve => setTimeout(resolve, 300));
+      setImportSteps(prev => prev.map(step => ({ ...step, status: 'completed' })));
+    };
+
     try {
+      const stepAnimation = animateSteps();
       const connection = await wrapConnectApp(appUrl.trim());
+      await stepAnimation; // Wait for animation to finish
       setConnectedApp(connection);
       setProjectName((current) => current || `${connection.appName || connection.metadata?.appName || 'App'} launch`);
     } catch (nextError) {
@@ -2480,6 +2674,15 @@ function WrapOnboardingScreen({ setRoute }) {
           </div>
         </div>
       </div>
+
+      {/* Import Progress Modal */}
+      {loadingConnection && (
+        <ImportProgressModal
+          appName={connectedApp?.appName || connectedApp?.metadata?.appName || 'Your App'}
+          appIcon={connectedApp?.metadata?.artworkUrl512 || connectedApp?.metadata?.artworkUrl100}
+          steps={importSteps}
+        />
+      )}
     </div>
   );
 }
