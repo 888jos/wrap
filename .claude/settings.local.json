@@ -26,7 +26,14 @@
       "Bash(vercel --yes)",
       "Bash(vercel login)",
       "Bash(vercel login --yes)",
-      "Bash(git add .)"
+      "Bash(git add .)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nAdd Vercel deployment configuration and rebranding to Signal\n\n- Configure Vercel deployment with vercel.json\n- Add .vercelignore for clean deployments\n- Update package.json with vercel-build script\n- Rebrand from Shipshot to Signal throughout app\n- Add comprehensive SaaS features (auth, credits, workspaces)\n- Implement Idea Validator with Apple App Store integration\n- Add Supabase backend integration\n- Switch to React production builds for performance\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push origin main)",
+      "Bash(git add vercel.json)",
+      "Bash(git commit -m \"Fix Vercel configuration for static site deployment\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
+      "Bash(git commit -m \"Simplify Vercel config - remove builds section\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
+      "Bash(git add -A)",
+      "Bash(git commit -m \"Remove vercel.json - use static hosting for Shipshot.html\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")"
     ],
     "deny": [],
     "ask": []
