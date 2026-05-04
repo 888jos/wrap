@@ -38,7 +38,12 @@
       "Bash(git commit -m \"WIP: Restructure for Vercel deployment\")",
       "Bash(git commit -m \"Add Vercel serverless API with Apple App Store integration\n\n- Create /api/[...path].js serverless function\n- Support /api/health endpoint\n- Support /api/apple/charts for App Store rankings\n- Support /api/idea-validator/research (mock for now)\n- Simplify vercel.json routing\n- Ready for scalable deployment\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
       "Bash(npm run build)",
-      "Bash(git commit -m \"Fix index.html for Vite build - proper module entry point\n\n- Replace Babel-based index.html with Vite entry\n- Use main.jsx as module entry point\n- All components now properly bundled\n- Ready for production deployment\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")"
+      "Bash(git commit -m \"Fix index.html for Vite build - proper module entry point\n\n- Replace Babel-based index.html with Vite entry\n- Use main.jsx as module entry point\n- All components now properly bundled\n- Ready for production deployment\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
+      "Bash(git commit --allow-empty -m \"Force Vercel redeploy\")",
+      "Bash(cat /Users/jos/wrap/index.html)",
+      "Bash(git rm Shipshot.html Shipshot-standalone.html)",
+      "Bash(git commit -m \"Remove old Babel-based HTML files - use Vite build only\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
+      "Bash(git commit -m \"Remove .vercelignore - let Vercel handle defaults\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")"
     ],
     "deny": [],
     "ask": []
