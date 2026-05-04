@@ -1,288 +1,375 @@
-const useState = React.useState;
-/* Templates, Assets, Exports (global), Settings */
+/* Templates, Assets, Exports, Settings */
 
-function TemplatesScreen({ setRoute }) {
-  const { TEMPLATES, APPS } = window.DATA;
-  const app = APPS[0];
-  const [cat, setCat] = useState('all');
+function ScreenSectionLabel({ children, meta }) {
+  return (
+    <div style={{ display: 'grid', gap: 3 }}>
+      <div style={{ fontSize: 12, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{children}</div>
+      {meta ? <div style={{ fontSize: 12.5, color: 'var(--text-3)' }}>{meta}</div> : null}
+    </div>
+  );
+}
+
+function TemplatesScreen() {
+  const { TEMPLATES, APPS, APP_CATEGORIES } = window.DATA;
+  const app = APPS[0] || { name: 'Preview', icon: 'P', tint: 'oklch(80% 0.12 60)', tint2: 'oklch(65% 0.14 30)' };
+  const [cat, setCat] = React.useState('all');
+  const visibleTemplates = cat === 'all'
+    ? TEMPLATES
+    : TEMPLATES.filter((template) => Array.isArray(template.appCategories) && template.appCategories.includes(cat));
   return (
     <div style={{ padding: '28px 36px 60px', maxWidth: 1400, margin: '0 auto' }}>
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 18 }}>
+      <div style={{ display: 'grid', gap: 14, marginBottom: 20 }}>
         <div>
           <h1 style={{ margin: 0, fontSize: 24, fontWeight: 600, letterSpacing: '-0.02em' }}>Creative systems</h1>
-          <div style={{ color: 'var(--text-3)', fontSize: 13, marginTop: 4 }}>Structured systems, not blank templates. Each is tuned for a category and density.</div>
+          <div style={{ color: 'var(--text-3)', fontSize: 13, marginTop: 4 }}>A lighter library of reusable directions, grouped by app category.</div>
         </div>
-        <div style={{ display: 'flex', gap: 6 }}>
-          <button className="btn sm">Import system</button>
-          <button className="btn primary sm"><window.I.Plus /> New system</button>
+        <div className="seg" style={{ width: 'fit-content', flexWrap: 'wrap' }}>
+          {['all', ...APP_CATEGORIES.map((item) => item.id)].map((item) => (
+            <button key={item} className={cat === item ? 'on' : ''} onClick={() => setCat(item)} style={{ textTransform: 'capitalize' }}>
+              {item === 'all' ? 'All' : (window.SHIPSHOT.categoryById(item)?.short || item)}
+            </button>
+          ))}
+        </div>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          <span className="chip">{visibleTemplates.length} systems</span>
+          <span className="chip">{APP_CATEGORIES.length} categories</span>
         </div>
       </div>
-
-      <div className="seg" style={{ marginBottom: 18 }}>
-        {['all','utility','lifestyle','games','finance','wellness','dev','custom'].map(c => (
-          <button key={c} className={cat === c ? 'on' : ''} onClick={() => setCat(c)} style={{ textTransform: 'capitalize' }}>{c}</button>
-        ))}
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 14 }}>
-        {TEMPLATES.map(t => (
-          <div key={t.id} className="card" style={{ padding: 14, transition: 'border-color 150ms', cursor: 'pointer' }}
-            onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-2)'}
-            onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border-1)'}>
-            <div style={{ display: 'flex', gap: 6, justifyContent: 'center', padding: '10px 0 14px', background: 'var(--bg-2)', borderRadius: 10, marginBottom: 12 }}>
-              {['headline','feature','stat'].map((k, i) => (
-                <div key={i} style={{ transform: `translateY(${i * 4}px) scale(${1 - i*0.04})` }}>
-                  <ScreenshotCard kind={k} app={app} template={t.id} width={72} idx={i} />
+      {cat !== 'all' ? (
+        <div style={{ marginBottom: 18, color: 'var(--text-3)', fontSize: 12.5 }}>
+          {window.SHIPSHOT.categoryById(cat)?.label || cat}
+          {' · '}
+          {window.SHIPSHOT.categoryById(cat)?.description || ''}
+        </div>
+      ) : null}
+      <div style={{ display: 'grid', gap: 10 }}>
+        {visibleTemplates.map((template) => (
+          <div key={template.id} className="editor-list-row" style={{ alignItems: 'center', gap: 16 }}>
+            <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
+              {['headline', 'feature', 'stat'].map((kind, index) => (
+                <div key={index} style={{ transform: `translateY(${index * 4}px) scale(${1 - index * 0.04})` }}>
+                  <ScreenshotCard kind={kind} app={app} template={template.id} width={74} idx={index} />
                 </div>
               ))}
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-              <div style={{ fontSize: 14, fontWeight: 500 }}>{t.name}</div>
-              <span className="chip">{t.density}</span>
+            <div style={{ minWidth: 0, flex: 1 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                <div style={{ fontSize: 14, fontWeight: 600 }}>{template.name}</div>
+                <span className="chip">{template.density}</span>
+              </div>
+              <div style={{ fontSize: 12, color: 'var(--text-3)', marginTop: 4 }}>{template.tag}</div>
             </div>
-            <div style={{ fontSize: 11.5, color: 'var(--text-3)', marginBottom: 10 }}>{t.tag}</div>
-            <div style={{ display: 'flex', gap: 6 }}>
-              <button className="btn sm" style={{ flex: 1 }}>Preview</button>
-              <button className="btn primary sm" style={{ flex: 1 }}>Use system</button>
+            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+              {(template.appCategories || []).slice(0, 4).map((categoryId) => (
+                <span key={categoryId} className="chip">{window.SHIPSHOT.categoryById(categoryId)?.short || categoryId}</span>
+              ))}
             </div>
           </div>
         ))}
       </div>
+      {visibleTemplates.length === 0 ? (
+        <div style={{ padding: '18px 0', color: 'var(--text-3)' }}>
+          Aucun template lié à cette catégorie pour l’instant.
+        </div>
+      ) : null}
     </div>
   );
+}
+
+function collectWorkspaceAssets(projects, apps) {
+  const mediaAssets = [];
+  const screenAssets = [];
+  projects.forEach((project) => {
+    const app = apps.find((item) => item.id === project.appId) || apps[0] || { name: 'Preview', icon: 'P', tint: '#999', tint2: '#666' };
+    (project.variantsData || []).forEach((variant) => {
+      (variant.screensData || []).forEach((screen, index) => {
+        screenAssets.push({
+          id: `${project.id}-${variant.id}-${screen.id}`,
+          project,
+          projectId: project.id,
+          projectName: project.name,
+          variantId: variant.id,
+          variantName: variant.name || 'Primary',
+          app,
+          variant,
+          screen,
+          index,
+        });
+        const phoneMedia = screen.layout?.phone?.mediaSrc;
+        if (phoneMedia) {
+          mediaAssets.push({
+            id: `${screen.id}-phone`,
+            kind: 'device-media',
+            src: phoneMedia,
+            mediaType: screen.layout?.phone?.mediaType || 'image/*',
+            label: `${project.name} · Screen ${index + 1}`,
+            projectId: project.id,
+            projectName: project.name,
+          });
+        }
+        (screen.decorations || []).forEach((decoration) => {
+          if (decoration.mediaSrc) {
+            mediaAssets.push({
+              id: `${screen.id}-${decoration.id}`,
+              kind: decoration.type || 'image',
+              src: decoration.mediaSrc,
+              mediaType: decoration.mediaType || 'image/*',
+              label: decoration.text || `${project.name} asset`,
+              projectId: project.id,
+              projectName: project.name,
+            });
+          }
+        });
+      });
+    });
+  });
+  return { mediaAssets, screenAssets };
 }
 
 function AssetsScreen({ setRoute }) {
-  const { APPS } = window.DATA;
-  const [tab, setTab] = useState('raw');
+  const { APPS, PROJECTS } = window.DATA;
+  const [selectedProjectId, setSelectedProjectId] = React.useState(PROJECTS[0]?.id || '');
+  const [assetTab, setAssetTab] = React.useState('brand');
+  const selectedProject = PROJECTS.find((item) => item.id === selectedProjectId) || PROJECTS[0] || null;
+  const selectedApp = APPS.find((item) => item.id === selectedProject?.appId) || APPS[0] || null;
+  const siblingProjects = PROJECTS.filter((project) => project.appId === selectedApp?.id);
+  const { mediaAssets, screenAssets } = React.useMemo(() => collectWorkspaceAssets(PROJECTS, APPS), [PROJECTS, APPS]);
+  const linkedMediaAssets = mediaAssets.filter((asset) => asset.projectId === selectedProject?.id);
+  const linkedScreens = screenAssets.filter((asset) => asset.projectId === selectedProject?.id);
+  const [draftBrand, setDraftBrand] = React.useState(() => ({
+    icon: selectedApp?.icon || 'A',
+    tint: selectedApp?.tint || '#7AC943',
+    tint2: selectedApp?.tint2 || '#3B82F6',
+    assetLocales: Array.isArray(selectedApp?.assetLocales) ? selectedApp.assetLocales.join(', ') : 'en-US',
+  }));
+
+  React.useEffect(() => {
+    if (!selectedProjectId && PROJECTS[0]?.id) {
+      setSelectedProjectId(PROJECTS[0].id);
+    }
+  }, [selectedProjectId, PROJECTS]);
+
+  React.useEffect(() => {
+    setDraftBrand({
+      icon: selectedApp?.icon || 'A',
+      tint: selectedApp?.tint || '#7AC943',
+      tint2: selectedApp?.tint2 || '#3B82F6',
+      assetLocales: Array.isArray(selectedApp?.assetLocales) ? selectedApp.assetLocales.join(', ') : 'en-US',
+    });
+  }, [selectedProjectId, selectedApp?.icon, selectedApp?.tint, selectedApp?.tint2, selectedApp?.assetLocales]);
+
+  if (!APPS.length && !PROJECTS.length) {
+    return <LocalEmptyPage title="Assets" body="No apps or projects exist in this workspace yet." actionLabel="Create project" actionRoute="new-project" />;
+  }
+
+  const saveBrandKit = () => {
+    if (!selectedApp?.id || typeof window.__shipshotUpdateWorkspace !== 'function') return;
+    const nextLocales = draftBrand.assetLocales
+      .split(',')
+      .map((item) => item.trim())
+      .filter(Boolean);
+    window.__shipshotUpdateWorkspace((current) => ({
+      ...current,
+      apps: current.apps.map((app) => app.id === selectedApp.id ? {
+        ...app,
+        icon: (draftBrand.icon || app.icon || 'A').slice(0, 2).toUpperCase(),
+        tint: draftBrand.tint || app.tint,
+        tint2: draftBrand.tint2 || app.tint2,
+        assetLocales: nextLocales.length ? nextLocales : (app.assetLocales || ['en-US']),
+      } : app),
+    }));
+  };
+
   return (
-    <div style={{ padding: '28px 36px 60px', maxWidth: 1400, margin: '0 auto' }}>
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 18 }}>
+    <div style={{ padding: '28px 36px 60px', maxWidth: 1360, margin: '0 auto' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 18, marginBottom: 20, flexWrap: 'wrap' }}>
         <div>
-          <h1 style={{ margin: 0, fontSize: 24, fontWeight: 600, letterSpacing: '-0.02em' }}>Assets</h1>
-          <div style={{ color: 'var(--text-3)', fontSize: 13, marginTop: 4 }}>Raw screenshots, brand, backgrounds, and reusable blocks.</div>
+          <h1 style={{ margin: 0, fontSize: 24, fontWeight: 600, letterSpacing: '-0.02em' }}>Assets hub</h1>
+          <div style={{ color: 'var(--text-3)', fontSize: 13, marginTop: 4 }}>One project at a time: brand kit, media used in screens, and reusable screen sources.</div>
         </div>
-        <button className="btn primary sm"><window.I.Upload /> Upload</button>
-      </div>
-      <div className="seg" style={{ marginBottom: 16 }}>
-        {[['raw','Raw screenshots',42],['logo','Logos',8],['color','Brand colors',12],['bg','Backgrounds',24],['block','Blocks',16]].map(([id,l,n]) => (
-          <button key={id} className={tab === id ? 'on' : ''} onClick={() => setTab(id)}>{l} <span className="mono" style={{ opacity: 0.5, marginLeft: 4 }}>{n}</span></button>
-        ))}
-      </div>
-
-      {tab === 'raw' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 10 }}>
-          {Array.from({ length: 18 }).map((_, i) => {
-            const app = APPS[i % APPS.length];
-            return (
-              <div key={i} style={{ position: 'relative' }}>
-                <div style={{
-                  aspectRatio: '9/19.5', borderRadius: 14,
-                  background: `linear-gradient(160deg, ${app.tint}, ${app.tint2})`,
-                  padding: 10, overflow: 'hidden', position: 'relative',
-                  border: '1px solid var(--border-1)',
-                }}>
-                  <div style={{ height: 14, marginBottom: 6 }} />
-                  <PhoneScene idx={i} width={120} app={app} />
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 4, display: 'flex', justifyContent: 'space-between' }}>
-                  <span>{app.name}-{(i+1).toString().padStart(2,'0')}.png</span>
-                  <span className="mono">1290×2796</span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {tab === 'color' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 10 }}>
-          {[
-            ['Lumen · Ember', 'oklch(65% 0.14 30)'],
-            ['Lumen · Amber', 'oklch(80% 0.12 60)'],
-            ['Glide · Deep', 'oklch(62% 0.14 220)'],
-            ['Glide · Mint', 'oklch(78% 0.14 180)'],
-            ['Otto · Clay', 'oklch(62% 0.17 20)'],
-            ['Otto · Wheat', 'oklch(80% 0.13 45)'],
-            ['Accent · Lime', 'oklch(84% 0.18 130)'],
-            ['Base · Ink', '#0a0b0d'],
-            ['Base · Bone', '#e9e6dd'],
-            ['Sys · Warn', 'oklch(82% 0.14 85)'],
-            ['Sys · Rose', 'oklch(70% 0.14 15)'],
-            ['Sys · Violet', 'oklch(72% 0.15 285)'],
-          ].map(([n, c]) => (
-            <div key={n} className="card" style={{ padding: 10 }}>
-              <div style={{ aspectRatio: 1, background: c, borderRadius: 8, marginBottom: 8 }} />
-              <div style={{ fontSize: 12, fontWeight: 500 }}>{n}</div>
-              <div className="mono" style={{ fontSize: 10.5, color: 'var(--text-3)' }}>{c}</div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {tab === 'bg' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
-          {window.DATA.TEMPLATES.map(t => (
-            <div key={t.id} className="card" style={{ padding: 10 }}>
-              <div style={{ aspectRatio: '16/10', background: t.bg, borderRadius: 8 }} />
-              <div style={{ fontSize: 12, fontWeight: 500, marginTop: 8 }}>{t.name} bg</div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {tab === 'logo' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 10 }}>
-          {APPS.concat(APPS.slice(0,3)).map((a, i) => (
-            <div key={i} className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-              <div style={{ width: 60, height: 60, borderRadius: 14, background: `linear-gradient(135deg, ${a.tint}, ${a.tint2})`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, fontSize: 26 }}>{a.icon}</div>
-              <div style={{ fontSize: 12, fontWeight: 500 }}>{a.name}</div>
-              <div style={{ fontSize: 10.5, color: 'var(--text-3)' }} className="mono">1024×1024</div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {tab === 'block' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
-          {['Stat block · big number','Feature row','Testimonial card','Before/After split','CTA footer','Star rating bar','Badge row','Timeline'].map(b => (
-            <div key={b} className="card" style={{ padding: 14 }}>
-              <div style={{ aspectRatio: '16/10', background: 'var(--bg-2)', borderRadius: 8, border: '1px dashed var(--border-2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-3)', fontSize: 11 }} className="mono">{b}</div>
-              <div style={{ fontSize: 12, fontWeight: 500, marginTop: 8 }}>{b}</div>
-              <div style={{ fontSize: 10.5, color: 'var(--text-3)' }}>Used in 3 projects</div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ExportsScreen({ setRoute }) {
-  const rows = [
-    { name: 'Seen — Black Friday CPP pack', when: '1h ago', size: '28 MB', status: 'Ready', count: 36 },
-    { name: 'Lumen v3 — US primary', when: '3h ago', size: '22 MB', status: 'Rendering', count: 18, progress: 72 },
-    { name: 'Glide DE — 6.7" only', when: 'Yesterday', size: '6.4 MB', status: 'Ready', count: 6 },
-    { name: 'Breadcrumb draft pack', when: '3d ago', size: '19 MB', status: 'Ready', count: 24 },
-    { name: 'Otto preview — internal', when: '5d ago', size: '12 MB', status: 'Expired', count: 12 },
-  ];
-  return (
-    <div style={{ padding: '28px 36px 60px', maxWidth: 1400, margin: '0 auto' }}>
-      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 18 }}>
-        <div>
-          <h1 style={{ margin: 0, fontSize: 24, fontWeight: 600, letterSpacing: '-0.02em' }}>Exports</h1>
-          <div style={{ color: 'var(--text-3)', fontSize: 13, marginTop: 4 }}>All packs rendered across your workspace. Expire after 30 days.</div>
+        <div className="seg">
+          <button className={assetTab === 'brand' ? 'on' : ''} onClick={() => setAssetTab('brand')}>Brand</button>
+          <button className={assetTab === 'media' ? 'on' : ''} onClick={() => setAssetTab('media')}>Media</button>
+          <button className={assetTab === 'screens' ? 'on' : ''} onClick={() => setAssetTab('screens')}>Screens</button>
         </div>
       </div>
-      <div className="card" style={{ padding: 0 }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-          <thead>
-            <tr style={{ color: 'var(--text-3)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-              {['Pack','Status','Files','Size','Rendered','Links',''].map(h => (
-                <th key={h} style={{ textAlign: 'left', padding: '12px 16px', fontWeight: 500, borderBottom: '1px solid var(--border-1)' }}>{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r, i) => (
-              <tr key={i} style={{ borderBottom: i < rows.length - 1 ? '1px solid var(--border-1)' : 'none' }}>
-                <td style={{ padding: '12px 16px', fontWeight: 500 }}>{r.name}</td>
-                <td style={{ padding: '12px 16px' }}>
-                  {r.status === 'Rendering' ? (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      <span className="chip accent"><span className="dot accent pulse" /> {r.progress}%</span>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '300px minmax(0, 1fr)', gap: 18, alignItems: 'start' }}>
+        <div style={{ position: 'sticky', top: 24, display: 'grid', gap: 16 }}>
+          <ScreenSectionLabel meta="Choose the project you want to inspect.">Project</ScreenSectionLabel>
+          <div style={{ display: 'grid', gap: 8 }}>
+            {PROJECTS.map((project) => {
+              const projectApp = APPS.find((item) => item.id === project.appId) || selectedApp || { name: 'App', icon: 'A', tint: '#999', tint2: '#666' };
+              const isActive = project.id === selectedProject?.id;
+              return (
+                <button
+                  key={project.id}
+                  className="editor-list-row"
+                  onClick={() => setSelectedProjectId(project.id)}
+                  style={isActive ? { background: 'var(--bg-2)', borderColor: 'var(--border-2)' } : undefined}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <div style={{ width: 34, height: 34, borderRadius: 10, background: `linear-gradient(135deg, ${projectApp.tint}, ${projectApp.tint2})`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700 }}>
+                      {projectApp.icon}
                     </div>
-                  ) : r.status === 'Expired' ? (
-                    <span style={{ color: 'var(--text-3)' }}><span className="dot" /> Expired</span>
-                  ) : (
-                    <span style={{ color: 'var(--success)' }}><span className="dot success" /> Ready</span>
-                  )}
-                </td>
-                <td style={{ padding: '12px 16px', color: 'var(--text-2)' }} className="mono">{r.count}</td>
-                <td style={{ padding: '12px 16px', color: 'var(--text-2)' }} className="mono">{r.size}</td>
-                <td style={{ padding: '12px 16px', color: 'var(--text-3)' }}>{r.when}</td>
-                <td style={{ padding: '12px 16px' }}>
-                  <button className="btn ghost sm" style={{ color: 'var(--accent)' }}>Share link</button>
-                </td>
-                <td style={{ padding: '12px 16px', textAlign: 'right' }}>
-                  {r.status === 'Ready' ? <button className="btn sm"><window.I.Download /> Download</button> : <button className="btn ghost icon sm"><window.I.Dots /></button>}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 600 }}>{project.name}</div>
+                      <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 2 }}>{projectApp.name} · {project.variantsData.length} localization{project.variantsData.length === 1 ? '' : 's'}</div>
+                    </div>
+                  </div>
+                  {isActive ? <span className="chip accent">Active</span> : null}
+                </button>
+              );
+            })}
+          </div>
 
-function SettingsScreen({ setRoute }) {
-  const [tab, setTab] = useState('workspace');
-  return (
-    <div style={{ padding: '28px 36px 60px', maxWidth: 1100, margin: '0 auto' }}>
-      <h1 style={{ margin: '0 0 20px', fontSize: 24, fontWeight: 600, letterSpacing: '-0.02em' }}>Settings</h1>
-      <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr', gap: 24 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-          {[['workspace','Workspace'],['brand','Brand defaults'],['billing','Billing & credits'],['integrations','Integrations'],['repo','Code sources'],['export','Export defaults'],['members','Members'],['api','API keys']].map(([id,l]) => (
-            <button key={id} onClick={() => setTab(id)} style={{
-              textAlign: 'left', padding: '7px 10px', borderRadius: 6, fontSize: 13,
-              background: tab === id ? 'var(--bg-3)' : 'transparent',
-              color: tab === id ? 'var(--text-1)' : 'var(--text-2)',
-              fontWeight: tab === id ? 500 : 400,
-            }}>{l}</button>
-          ))}
-        </div>
-        <div>
-          {tab === 'workspace' && <SettingsCard title="Workspace">
-            <Field k="Workspace name" v={<input className="input" defaultValue="Indie Studio" />} />
-            <Field k="Slug" v={<input className="input" defaultValue="indie-studio" />} />
-            <Field k="Default platform" v={<div className="seg"><button className="on">iOS</button><button>Android</button><button>Both</button></div>} />
-            <Field k="Default market" v={<input className="input" defaultValue="United States" />} />
-          </SettingsCard>}
-          {tab === 'brand' && <SettingsCard title="Brand defaults">
-            <Field k="Primary font" v={<input className="input" defaultValue="Inter Tight" />} />
-            <Field k="Accent color" v={<div style={{ display: 'flex', gap: 6 }}>{['oklch(84% 0.18 130)','oklch(72% 0.15 285)','oklch(82% 0.14 85)','oklch(82% 0.13 210)'].map((c,i)=><div key={c} style={{ width: 28, height: 28, borderRadius: 6, background: c, border: i===0?'2px solid var(--text-1)':'1px solid var(--border-2)' }} />)}</div>} />
-            <Field k="Default device frame" v={<div className="seg"><button className="on">iPhone 15 Pro</button><button>iPhone 15</button><button>None</button></div>} />
-            <Field k="Default tone" v={<div className="seg"><button className="on">Premium</button><button>Warm</button><button>Bold</button></div>} />
-          </SettingsCard>}
-          {tab === 'billing' && <SettingsCard title="Billing">
-            <div style={{ padding: 16, background: 'var(--bg-2)', borderRadius: 10, border: '1px solid var(--border-1)', marginBottom: 16 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                <div>
-                  <div style={{ fontSize: 15, fontWeight: 500 }}>Studio plan · $49/mo</div>
-                  <div style={{ fontSize: 12, color: 'var(--text-3)' }}>Renews May 1, 2026</div>
-                </div>
-                <button className="btn sm">Manage plan</button>
-              </div>
-              <UsageRow label="Generations" used={148} total={400} />
-              <div style={{ height: 6 }} />
-              <UsageRow label="Repo analyses" used={4} total={10} tone="warn" />
+          {selectedProject ? (
+            <div style={{ paddingTop: 16, borderTop: '1px solid var(--border-1)', display: 'grid', gap: 10 }}>
+              <ScreenSectionLabel>Quick actions</ScreenSectionLabel>
+              <button className="btn sm" onClick={() => selectedProject ? window.__shipshotOpenProjectEditor?.(selectedProject.id) : setRoute({ screen: 'new-project' })}>
+                <window.I.Pencil /> {selectedProject ? 'Open design editor' : 'Create first project'}
+              </button>
+              <button className="btn ghost sm" onClick={() => selectedProject ? setRoute({ screen: 'project', projectId: selectedProject.id, tab: 'overview' }) : setRoute({ screen: 'my-projects' })}>
+                <window.I.Image /> Open project workspace
+              </button>
+              <button className="btn ghost sm" onClick={() => setRoute({ screen: 'my-projects' })}>
+                <window.I.Folder /> View projects
+              </button>
             </div>
-            <Field k="Billing email" v={<input className="input" defaultValue="billing@indiestudio.co" />} />
-            <Field k="Tax ID" v={<input className="input" placeholder="Optional" />} />
-          </SettingsCard>}
-          {tab === 'integrations' && <SettingsCard title="Integrations">
-            {[
-              ['GitHub', 'Read source for app analysis', 'Connected · maya', true],
-              ['App Store Connect', 'Push screenshots directly', 'Not connected', false],
-              ['Figma', 'Import components as blocks', 'Not connected', false],
-              ['Slack', 'Notify channel on export', 'Connected · #ship', true],
-            ].map(([n, d, s, on]) => (
-              <div key={n} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 0', borderBottom: '1px solid var(--border-1)' }}>
-                <div style={{ width: 32, height: 32, borderRadius: 8, background: 'var(--bg-3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-2)' }}>{n === 'GitHub' ? <window.I.Github /> : n === 'App Store Connect' ? <window.I.Apple /> : <window.I.Layers />}</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 13.5, fontWeight: 500 }}>{n}</div>
-                  <div style={{ fontSize: 12, color: 'var(--text-3)' }}>{d}</div>
+          ) : null}
+        </div>
+
+        <div style={{ display: 'grid', gap: 18 }}>
+          {assetTab === 'brand' && selectedProject && selectedApp ? (
+            <>
+              <div style={{ display: 'grid', gap: 16 }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 18, flexWrap: 'wrap' }}>
+                  <div>
+                    <ScreenSectionLabel meta={selectedApp.name}>Brand kit</ScreenSectionLabel>
+                    <div style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.03em', marginTop: 4 }}>{selectedProject.name}</div>
+                  </div>
+                  <div style={{ width: 72, height: 72, borderRadius: 20, background: `linear-gradient(135deg, ${draftBrand.tint}, ${draftBrand.tint2})`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 26, fontWeight: 800 }}>
+                    {(draftBrand.icon || selectedApp.icon || 'A').slice(0, 2).toUpperCase()}
+                  </div>
                 </div>
-                <div style={{ fontSize: 12, color: on ? 'var(--success)' : 'var(--text-3)' }}>{on && <span className="dot success" />} {s}</div>
-                <button className="btn sm">{on ? 'Configure' : 'Connect'}</button>
+                <div style={{ display: 'grid', gridTemplateColumns: '160px 1fr 1fr', gap: 12 }}>
+                  <label>
+                    <div style={{ fontSize: 11.5, color: 'var(--text-3)', marginBottom: 6 }}>App mark</div>
+                    <input className="input" value={draftBrand.icon} maxLength={2} onChange={(e) => setDraftBrand((current) => ({ ...current, icon: e.target.value.toUpperCase() }))} />
+                  </label>
+                  <label>
+                    <div style={{ fontSize: 11.5, color: 'var(--text-3)', marginBottom: 6 }}>Primary color</div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 44px', gap: 8 }}>
+                      <input className="input" value={draftBrand.tint} onChange={(e) => setDraftBrand((current) => ({ ...current, tint: e.target.value }))} />
+                      <input className="input" type="color" value={draftBrand.tint} onChange={(e) => setDraftBrand((current) => ({ ...current, tint: e.target.value }))} style={{ padding: 4 }} />
+                    </div>
+                  </label>
+                  <label>
+                    <div style={{ fontSize: 11.5, color: 'var(--text-3)', marginBottom: 6 }}>Secondary color</div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 44px', gap: 8 }}>
+                      <input className="input" value={draftBrand.tint2} onChange={(e) => setDraftBrand((current) => ({ ...current, tint2: e.target.value }))} />
+                      <input className="input" type="color" value={draftBrand.tint2} onChange={(e) => setDraftBrand((current) => ({ ...current, tint2: e.target.value }))} style={{ padding: 4 }} />
+                    </div>
+                  </label>
+                </div>
+                <label style={{ display: 'block', marginTop: 12 }}>
+                  <div style={{ fontSize: 11.5, color: 'var(--text-3)', marginBottom: 6 }}>Asset locales</div>
+                  <input className="input" value={draftBrand.assetLocales} onChange={(e) => setDraftBrand((current) => ({ ...current, assetLocales: e.target.value }))} />
+                  <div style={{ fontSize: 11.5, color: 'var(--text-3)', marginTop: 6 }}>Comma-separated locale codes, for example `en-US, fr-FR, de-DE`.</div>
+                </label>
+                <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
+                  <button className="btn primary sm" onClick={saveBrandKit}>Save brand kit</button>
+                  <button className="btn ghost sm" onClick={() => setDraftBrand({
+                    icon: selectedApp.icon || 'A',
+                    tint: selectedApp.tint || '#7AC943',
+                    tint2: selectedApp.tint2 || '#3B82F6',
+                    assetLocales: Array.isArray(selectedApp.assetLocales) ? selectedApp.assetLocales.join(', ') : 'en-US',
+                  })}>Reset</button>
+                </div>
               </div>
-            ))}
-          </SettingsCard>}
-          {(tab === 'repo' || tab === 'export' || tab === 'members' || tab === 'api') && (
-            <SettingsCard title={{repo:'Code sources',export:'Export defaults',members:'Members',api:'API keys'}[tab]}>
-              <div style={{ color: 'var(--text-3)', fontSize: 13 }}>Manage {tab} here.</div>
-            </SettingsCard>
+
+              <div style={{ display: 'grid', gap: 10, paddingTop: 6 }}>
+                <ScreenSectionLabel meta="Other projects linked to the same app.">Sibling projects</ScreenSectionLabel>
+                <div style={{ display: 'grid', gap: 8 }}>
+                  {siblingProjects.length ? siblingProjects.map((project) => (
+                    <button key={project.id} className="editor-list-row" onClick={() => setRoute({ screen: 'project', projectId: project.id, tab: 'overview' })}>
+                      <div>
+                        <div style={{ fontSize: 13, fontWeight: 600 }}>{project.name}</div>
+                        <div style={{ fontSize: 11, color: 'var(--text-3)', marginTop: 2 }}>{project.variantsData.length} localization{project.variantsData.length === 1 ? '' : 's'} · {project.screens} screens</div>
+                      </div>
+                      <span className="chip">{project.status}</span>
+                    </button>
+                  )) : (
+                    <div style={{ fontSize: 12.5, color: 'var(--text-3)' }}>No sibling projects are linked to this app yet.</div>
+                  )}
+                </div>
+              </div>
+            </>
+          ) : null}
+
+          {assetTab === 'media' && (
+            <div style={{ display: 'grid', gap: 14 }}>
+              <ScreenSectionLabel meta={`${linkedMediaAssets.length} media asset${linkedMediaAssets.length === 1 ? '' : 's'} used in this project.`}>Project media</ScreenSectionLabel>
+              {linkedMediaAssets.length ? (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 12 }}>
+                  {linkedMediaAssets.map((asset) => (
+                    <div key={asset.id} style={{ display: 'grid', gap: 8 }}>
+                      <div style={{ aspectRatio: '4 / 5', background: 'var(--bg-3)', borderRadius: 16, overflow: 'hidden', border: '1px solid var(--border-1)' }}>
+                        {String(asset.mediaType || '').startsWith('video/') ? (
+                          <video src={asset.src} muted controls style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                        ) : (
+                          <img src={asset.src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                        )}
+                      </div>
+                      <div style={{ fontSize: 12.5, fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{asset.label}</div>
+                      <div style={{ fontSize: 11, color: 'var(--text-3)' }}>{asset.projectName}</div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div style={{ fontSize: 12.5, color: 'var(--text-3)' }}>No uploaded media has been used in this project yet.</div>
+              )}
+            </div>
+          )}
+
+          {assetTab === 'screens' && (
+            <div style={{ display: 'grid', gap: 14 }}>
+              <ScreenSectionLabel meta={`${linkedScreens.length} reusable screen source${linkedScreens.length === 1 ? '' : 's'} in this project.`}>Latest screens</ScreenSectionLabel>
+              {linkedScreens.length ? (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: 14 }}>
+                  {linkedScreens.slice(0, 24).map((item) => (
+                    <button key={item.id} style={{ display: 'grid', gap: 10, textAlign: 'left', background: 'transparent', border: 'none', padding: 0, cursor: 'pointer' }} onClick={() => setRoute({ screen: 'project', projectId: item.projectId, tab: 'overview' })}>
+                      <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0 12px', borderRadius: 16, border: '1px solid var(--border-1)' }}>
+                        <ScreenshotCard
+                          kind={item.screen.kind}
+                          app={item.app}
+                          template={item.screen.template || item.variant.templateId || item.project.styleId || 't1'}
+                          width={116}
+                          idx={item.index}
+                          headline={item.screen.headline}
+                          sub={item.screen.sub}
+                          ctaLabel={item.screen.ctaLabel}
+                          bg={item.screen.bg}
+                          locale={item.variant.assetLocale}
+                          layout={item.screen.layout}
+                          decorations={item.screen.decorations}
+                          frameStyle={item.screen.frameStyle}
+                          textStyle={item.screen.textStyle}
+                          ambientStyle={item.screen.ambientStyle}
+                          ctaStyle={item.screen.ctaStyle}
+                          chromeStyle={item.screen.chromeStyle}
+                          fontFamily={item.screen.fontFamily}
+                        />
+                      </div>
+                      <div style={{ fontSize: 12.5, fontWeight: 600 }}>{item.projectName}</div>
+                      <div style={{ fontSize: 11, color: 'var(--text-3)' }}>{item.variantName} · Screen {item.index + 1}</div>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div style={{ fontSize: 12.5, color: 'var(--text-3)' }}>No screen previews available for this project yet.</div>
+              )}
+            </div>
           )}
         </div>
       </div>
@@ -290,22 +377,129 @@ function SettingsScreen({ setRoute }) {
   );
 }
 
-function SettingsCard({ title, children }) {
+function ExportsScreen({ setRoute }) {
+  const { PROJECTS, APPS, STORE_EXPORT_PRESETS } = window.DATA;
+
+  if (!PROJECTS.length) {
+    return <LocalEmptyPage title="Exports" body="No projects exist yet, so there is nothing to export." actionLabel="Create project" actionRoute="new-project" />;
+  }
+
   return (
-    <div className="card" style={{ padding: 22 }}>
-      <h3 style={{ margin: '0 0 18px', fontSize: 15, fontWeight: 500 }}>{title}</h3>
-      {children}
+    <div style={{ padding: '28px 36px 60px', maxWidth: 1320, margin: '0 auto' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 18, marginBottom: 20, flexWrap: 'wrap' }}>
+        <div>
+          <h1 style={{ margin: 0, fontSize: 24, fontWeight: 600, letterSpacing: '-0.02em' }}>Exports hub</h1>
+          <div style={{ color: 'var(--text-3)', fontSize: 13, marginTop: 4 }}>A simpler delivery queue: check which projects are ready, then jump straight into deliver.</div>
+        </div>
+        <button className="btn sm" onClick={() => setRoute({ screen: 'my-projects' })}>
+          <window.I.Folder /> Projects
+        </button>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 320px', gap: 18, alignItems: 'start' }}>
+        <div style={{ display: 'grid', gap: 10 }}>
+          <ScreenSectionLabel meta="Every project stays here until it is ready to be delivered.">Projects ready to deliver</ScreenSectionLabel>
+          <div style={{ display: 'grid', gap: 10 }}>
+            {PROJECTS.map((project) => {
+              const app = APPS.find((item) => item.id === project.appId) || APPS[0] || { name: 'App', icon: 'A', tint: '#999', tint2: '#666' };
+              const totalScreens = (project.variantsData || []).reduce((sum, variant) => sum + (variant.screensData?.length || 0), 0);
+              const activeVariant = project.variantsData.find((variant) => variant.id === project.activeVariantId) || project.variantsData[0];
+              const isReady = totalScreens > 0 && project.variantsData.length > 0;
+              return (
+                <div key={project.id} className="editor-list-row">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+                    <div style={{ width: 38, height: 38, borderRadius: 12, background: `linear-gradient(135deg, ${app.tint}, ${app.tint2})`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, flexShrink: 0 }}>
+                      {app.icon}
+                    </div>
+                    <div style={{ minWidth: 0 }}>
+                      <div style={{ fontSize: 13.5, fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{project.name}</div>
+                      <div style={{ fontSize: 11.5, color: 'var(--text-3)', marginTop: 3 }}>
+                        {app.name} · {project.variantsData.length} localization{project.variantsData.length === 1 ? '' : 's'} · {totalScreens} screens · active {window.SHIPSHOT.localizationLabel(activeVariant?.country, 'compact')}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+                    <span className={`chip${isReady ? ' accent' : ''}`}>{isReady ? 'Ready' : 'Draft'}</span>
+                    <button className="btn sm" onClick={() => setRoute({ screen: 'project', projectId: project.id, tab: 'exports' })}>
+                      <window.I.Download /> Deliver
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div style={{ display: 'grid', gap: 16 }}>
+          <div style={{ display: 'grid', gap: 10 }}>
+            <ScreenSectionLabel>Supported packs</ScreenSectionLabel>
+            <div style={{ display: 'grid', gap: 10 }}>
+              {STORE_EXPORT_PRESETS.map((preset) => (
+                <div key={preset.id}>
+                  <div style={{ fontSize: 13, fontWeight: 600 }}>{preset.name}</div>
+                  <div style={{ fontSize: 11.5, color: 'var(--text-3)', marginTop: 3 }}>{preset.note}</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 8 }}>
+                    {preset.specs.map((spec) => (
+                      <span key={spec.id} className="chip">{spec.label}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gap: 10 }}>
+            <ScreenSectionLabel>Flow</ScreenSectionLabel>
+            <div style={{ fontSize: 12.5, color: 'var(--text-2)', lineHeight: 1.65 }}>
+              1. Open a project deliver tab.
+              <br />
+              2. Choose formats and compliant sizes.
+              <br />
+              3. Export full packs or single screens.
+              <br />
+              4. Prepare App Store Connect or Google Play manifests/jobs if needed.
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
-function Field({ k, v }) {
+function SettingsScreen() {
+  const { WORKSPACE } = window.DATA;
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr', gap: 12, padding: '10px 0', borderBottom: '1px solid var(--border-1)', alignItems: 'center' }}>
-      <div style={{ fontSize: 12.5, color: 'var(--text-3)' }}>{k}</div>
-      <div>{v}</div>
+    <div style={{ padding: '28px 36px 60px', maxWidth: 980, margin: '0 auto' }}>
+      <h1 style={{ margin: '0 0 20px', fontSize: 24, fontWeight: 600, letterSpacing: '-0.02em' }}>Settings</h1>
+      <div className="card" style={{ padding: 22 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr', gap: 12, padding: '10px 0', borderBottom: '1px solid var(--border-1)', alignItems: 'center' }}>
+          <div style={{ fontSize: 12.5, color: 'var(--text-3)' }}>Workspace</div>
+          <div>{WORKSPACE.account.workspaceName}</div>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr', gap: 12, padding: '10px 0', borderBottom: '1px solid var(--border-1)', alignItems: 'center' }}>
+          <div style={{ fontSize: 12.5, color: 'var(--text-3)' }}>Mode</div>
+          <div>Local prototype</div>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr', gap: 12, padding: '10px 0', alignItems: 'center' }}>
+          <div style={{ fontSize: 12.5, color: 'var(--text-3)' }}>Persistence</div>
+          <div>Browser localStorage only</div>
+        </div>
+      </div>
     </div>
   );
 }
 
-Object.assign(window, { TemplatesScreen, AssetsScreen, ExportsScreen, SettingsScreen });
+function LocalEmptyPage({ title, body, actionLabel, actionRoute }) {
+  const setRoute = window.__shipshotSetRoute;
+  return (
+    <div style={{ padding: '36px', maxWidth: 920, margin: '0 auto' }}>
+      <div style={{ padding: 28, textAlign: 'center', border: '1px solid var(--border-1)', borderRadius: 24 }}>
+        <div style={{ fontSize: 24, fontWeight: 600 }}>{title}</div>
+        <div style={{ marginTop: 10, color: 'var(--text-3)', fontSize: 14, lineHeight: 1.6 }}>{body}</div>
+        {actionLabel && setRoute ? <button className="btn primary" style={{ marginTop: 16 }} onClick={() => setRoute({ screen: actionRoute })}>{actionLabel}</button> : null}
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { TemplatesScreen, AssetsScreen, ExportsScreen, SettingsScreen, ScreenSectionLabel });

@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=1440" />
-<title>Shipshot — App Store Screenshot AI</title>
+<title>Signal — App Store Growth Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Fraunces:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
 <style>
 /* ==========================================================================
-   Shipshot — App Store Screenshot AI
+   Signal — App Store Growth Intelligence
    Design system tokens + base styles
    ========================================================================== */
 
@@ -360,8 +360,8 @@ input:focus, textarea:focus, select:focus, button:focus {
 }
 </style>
 <body><div id="root"></div>
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <script type="text/babel" data-presets="react">
 /* Icons — consistent 16-18px line icons, stroke 1.5 */
@@ -413,7 +413,7 @@ window.I = I;
 
 </script>
 <script type="text/babel" data-presets="react">
-/* Mock data for Shipshot prototype */
+/* Mock data for Signal prototype */
 
 const APPS = [
   { id: 'lumen', name: 'Lumen', sub: 'Focus timer + ambient sound', icon: 'L', tint: 'oklch(80% 0.12 60)', tint2: 'oklch(65% 0.14 30)', category: 'Productivity' },
@@ -873,7 +873,7 @@ function Logo({ size = 22 }) {
           letterSpacing: '-0.06em',
         }}>s</div>
       </div>
-      <span style={{ fontWeight: 700, letterSpacing: '-0.02em', fontSize: 15 }}>Shipshot</span>
+      <span style={{ fontWeight: 700, letterSpacing: '-0.02em', fontSize: 15 }}>Signal</span>
     </div>
   );
 }
@@ -1090,7 +1090,7 @@ function HomeScreen({ setRoute }) {
           </Section>
 
           {/* AI suggestions */}
-          <Section title="Suggestions from Shipshot AI" icon={<window.I.Sparkle />}>
+          <Section title="Suggestions from Signal AI" icon={<window.I.Sparkle />}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
               <SuggestionCard
                 title="Localize Lumen for Japan"
@@ -1284,7 +1284,7 @@ function UsageRow({ label, used, total, tone }) {
 function ActivityCard() {
   const items = [
     { who: 'You', what: 'exported', target: 'Seen — BF CPP pack', time: '1h', color: 'var(--accent)' },
-    { who: 'Shipshot AI', what: 'finished generating', target: 'Otto FR (5 screens)', time: '3h', color: 'var(--violet)' },
+    { who: 'Signal AI', what: 'finished generating', target: 'Otto FR (5 screens)', time: '3h', color: 'var(--violet)' },
     { who: 'Jonas M.', what: 'commented on', target: 'Glide DE · Screen 3', time: 'yesterday', color: 'var(--amber)' },
     { who: 'You', what: 'duplicated', target: 'Lumen → JP variant', time: '2d', color: 'var(--cyan)' },
   ];
@@ -1312,7 +1312,7 @@ function TipCard() {
       <div className="noise" />
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--accent)', fontSize: 11, fontWeight: 500, letterSpacing: '0.05em', marginBottom: 8 }}><window.I.Bolt /> TIP</div>
       <div style={{ fontSize: 13, lineHeight: 1.5, marginBottom: 10, color: 'var(--text-2)' }}>
-        Connect your repo and Shipshot will extract value props, features, and screen flow. Skip the blank prompt.
+        Connect your repo and Signal will extract value props, features, and screen flow. Skip the blank prompt.
       </div>
       <button className="btn sm" style={{ gap: 6 }}><window.I.Github /> Connect GitHub</button>
     </div>
@@ -1323,13 +1323,12 @@ Object.assign(window, { HomeScreen });
 
 </script>
 <script type="text/babel" data-presets="react">
-const useState = React.useState;
 /* Projects list + New project flow + Templates + Assets + Exports + Settings */
 
 function ProjectsScreen({ setRoute }) {
   const { PROJECTS, APPS } = window.DATA;
-  const [view, setView] = useState('grid');
-  const [filter, setFilter] = useState('all');
+  const [view, setView] = React.useState('grid');
+  const [filter, setFilter] = React.useState('all');
   return (
     <div style={{ padding: '28px 36px 60px', maxWidth: 1400, margin: '0 auto' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
@@ -1428,12 +1427,12 @@ function ProjectsScreen({ setRoute }) {
 // ─── NEW PROJECT FLOW ───────────────────────────────────────────
 function NewProjectFlow({ setRoute }) {
   const { APPS, COUNTRIES } = window.DATA;
-  const [step, setStep] = useState(0);
-  const [source, setSource] = useState('prompt');
-  const [app, setApp] = useState('new');
-  const [country, setCountry] = useState('US');
-  const [audience, setAudience] = useState('Students, 18–24');
-  const [style, setStyle] = useState('t1');
+  const [step, setStep] = React.useState(0);
+  const [source, setSource] = React.useState('prompt');
+  const [app, setApp] = React.useState('new');
+  const [country, setCountry] = React.useState('US');
+  const [audience, setAudience] = React.useState('Students, 18–24');
+  const [style, setStyle] = React.useState('t1');
   const steps = ['Source', 'App', 'Audience', 'Style', 'Review'];
   return (
     <div style={{ maxWidth: 900, margin: '0 auto', padding: '32px 24px 80px' }}>
@@ -1709,7 +1708,6 @@ Object.assign(window, { ProjectsScreen, NewProjectFlow, Label });
 
 </script>
 <script type="text/babel" data-presets="react">
-const useState = React.useState;
 /* Project workspace: Overview, Generate, App Intelligence, Edit, Variants, Exports, History */
 
 function ProjectScreen({ projectId, tab, setRoute }) {
@@ -1878,9 +1876,9 @@ function VariantMini({ label, sublabel, active, kind = 'headline', app, tone }) 
 
 // ─── Generate ──────────────────────────────────────────────────
 function GenerateTab({ project, app, setRoute }) {
-  const [prompt, setPrompt] = useState('Lead with the focus session hero, then ambient library, then Apple Watch. Students angle — quiet confidence, not hype.');
-  const [count, setCount] = useState(6);
-  const [running, setRunning] = useState(false);
+  const [prompt, setPrompt] = React.useState('Lead with the focus session hero, then ambient library, then Apple Watch. Students angle — quiet confidence, not hype.');
+  const [count, setCount] = React.useState(6);
+  const [running, setRunning] = React.useState(false);
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 360px', gap: 0, height: '100%' }}>
       <div style={{ padding: '24px 28px 60px', overflow: 'auto' }}>
@@ -2014,8 +2012,8 @@ function InlineToggle({ label, val }) {
 
 // ─── Editor ──────────────────────────────────────────────────
 function EditorTab({ project, app }) {
-  const [sel, setSel] = useState(0);
-  const [tool, setTool] = useState('text');
+  const [sel, setSel] = React.useState(0);
+  const [tool, setTool] = React.useState('text');
   const kinds = project.thumb;
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr 320px', height: '100%', overflow: 'hidden' }}>
@@ -2204,7 +2202,7 @@ function VariantsTab({ project, app }) {
     { name: 'JP premium', sub: 'Japan · Watch-first', country: '🇯🇵', kinds: project.thumb, tpl: 't4', diff: 'Reorder · tone' },
     { name: 'BF 50% CPP', sub: 'Price-led · 7-day', country: '🇺🇸', kinds: project.thumb, tpl: 't3', diff: 'Stat + CTA' },
   ];
-  const [compare, setCompare] = useState([0, 3]);
+  const [compare, setCompare] = React.useState([0, 3]);
   return (
     <div style={{ padding: '24px 28px 60px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18 }}>
@@ -2283,7 +2281,7 @@ function VariantsTab({ project, app }) {
 
 // ─── Exports ───────────────────────────────────────────────────
 function ExportsTab({ project, app }) {
-  const [sizes, setSizes] = useState(['6.7','6.5','5.5']);
+  const [sizes, setSizes] = React.useState(['6.7','6.5','5.5']);
   return (
     <div style={{ padding: '24px 28px 60px', display: 'grid', gridTemplateColumns: '1fr 320px', gap: 20 }}>
       <div className="card" style={{ padding: 20 }}>
@@ -2390,12 +2388,12 @@ function ExportsTab({ project, app }) {
 // ─── History ───────────────────────────────────────────────────
 function HistoryTab({ project, app }) {
   const events = [
-    { when: 'Just now', who: 'Shipshot AI', what: 'Generated draft v14', tone: 'accent', detail: 'Regenerated screen 03 · "Lead with Apple Watch Live Activity"' },
+    { when: 'Just now', who: 'Signal AI', what: 'Generated draft v14', tone: 'accent', detail: 'Regenerated screen 03 · "Lead with Apple Watch Live Activity"' },
     { when: '2h ago', who: 'Maya R.', what: 'Edited headline on screen 01', tone: 'muted', detail: '"Finally, deep work that sticks." (was "Focus, without the noise.")' },
     { when: '2h ago', who: 'Maya R.', what: 'Swapped creative system to Premium Minimal', tone: 'muted' },
-    { when: 'Yesterday', who: 'Shipshot AI', what: 'Generated draft v13', tone: 'accent', detail: '6 screens · "Premium minimal, students angle"' },
+    { when: 'Yesterday', who: 'Signal AI', what: 'Generated draft v13', tone: 'accent', detail: '6 screens · "Premium minimal, students angle"' },
     { when: 'Yesterday', who: 'Jonas M.', what: 'Commented on screen 05', tone: 'muted', detail: '"Can we try a stat above 90% instead?"' },
-    { when: '2 days ago', who: 'Shipshot AI', what: 'Analyzed repo maya/lumen-ios', tone: 'violet', detail: '148 files · 4 value props · 8 features detected' },
+    { when: '2 days ago', who: 'Signal AI', what: 'Analyzed repo maya/lumen-ios', tone: 'violet', detail: '148 files · 4 value props · 8 features detected' },
     { when: '2 days ago', who: 'Maya R.', what: 'Created project', tone: 'muted' },
   ];
   return (
@@ -2434,13 +2432,12 @@ Object.assign(window, { ProjectScreen });
 
 </script>
 <script type="text/babel" data-presets="react">
-const useState = React.useState;
 /* Templates, Assets, Exports (global), Settings */
 
 function TemplatesScreen({ setRoute }) {
   const { TEMPLATES, APPS } = window.DATA;
   const app = APPS[0];
-  const [cat, setCat] = useState('all');
+  const [cat, setCat] = React.useState('all');
   return (
     <div style={{ padding: '28px 36px 60px', maxWidth: 1400, margin: '0 auto' }}>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 18 }}>
@@ -2490,7 +2487,7 @@ function TemplatesScreen({ setRoute }) {
 
 function AssetsScreen({ setRoute }) {
   const { APPS } = window.DATA;
-  const [tab, setTab] = useState('raw');
+  const [tab, setTab] = React.useState('raw');
   return (
     <div style={{ padding: '28px 36px 60px', maxWidth: 1400, margin: '0 auto' }}>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 18 }}>
@@ -2653,7 +2650,7 @@ function ExportsScreen({ setRoute }) {
 }
 
 function SettingsScreen({ setRoute }) {
-  const [tab, setTab] = useState('workspace');
+  const [tab, setTab] = React.useState('workspace');
   return (
     <div style={{ padding: '28px 36px 60px', maxWidth: 1100, margin: '0 auto' }}>
       <h1 style={{ margin: '0 0 20px', fontSize: 24, fontWeight: 600, letterSpacing: '-0.02em' }}>Settings</h1>

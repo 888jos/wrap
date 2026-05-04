@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://127.0.0.1:3000/api/health)",
+      "Bash(node server.mjs)",
+      "Bash(curl -s \"http://127.0.0.1:3000/api/apple/charts?chart=top-free&country=us&limit=50\")",
+      "Bash(lsof -ti:3000)",
+      "Bash(xargs kill -9)",
+      "Bash(curl -s http://127.0.0.1:3000)",
+      "Bash(npm run lint)",
+      "Bash(curl -s http://127.0.0.1:3000/api/idea-validator/research -X POST -H \"Content-Type: application/json\" -d '{\"\"\"\"idea\"\"\"\":\"\"\"\"A productivity app that helps remote workers track their deep work sessions with focus timers, distraction blocking, and detailed analytics on their most productive hours\"\"\"\"}')",
+      "Bash(curl -s http://127.0.0.1:3000/api/idea-validator/research -X POST -H \"Content-Type: application/json\" -d '{\"\"idea\"\":\"\"A smart water bottle that tracks your hydration levels throughout the day and reminds you to drink water with LED lights and vibration alerts\"\"}')",
+      "Bash(curl -s http://127.0.0.1:3000/api/idea-validator/research -X POST -H \"Content-Type: application/json\" -d '{\"\"idea\"\":\"\"A consulting agency that helps startups grow their business through marketing campaigns and strategic partnerships\"\"}')",
+      "Bash(curl -s http://127.0.0.1:3000/api/idea-validator/research -X POST -H \"Content-Type: application/json\" -d '{\"\"idea\"\":\"\"A consulting agency that helps startups grow their business through marketing campaigns and strategic partnerships for rapid revenue growth and market expansion\"\"}')",
+      "Bash(curl -s http://127.0.0.1:3000/api/idea-validator/research -X POST -H \"Content-Type: application/json\" -d '{\"\"idea\"\":\"\"A smart wearable device that monitors your heart rate and sleep patterns throughout the night with a comfortable band and long battery life\"\"}')",
+      "Bash(lsof -iTCP:3000 -sTCP:LISTEN)",
+      "Bash(killall node)",
+      "Bash(node /Users/jos/wrap/server.mjs)",
+      "Bash(curl -s http://127.0.0.1:3000/api/idea-validator/research -X POST -H \"Content-Type: application/json\" -d '{\"\"\"\"idea\"\"\"\":\"\"\"\"Mobile app anti-procrastination basée sur la continuité avec des streaks et notifications pour maintenir la motivation\"\"\"\"}')",
+      "Bash(curl -s http://127.0.0.1:3000/api/idea-validator/research -X POST -H \"Content-Type: application/json\" -d '{\"\"idea\"\":\"\"Mobile app anti-procrastination basée sur la continuité avec des streaks et notifications pour maintenir la motivation\"\"}')",
+      "Bash(curl -s http://127.0.0.1:3000/api/idea-validator/research -X POST -H \"Content-Type: application/json\" -d '{\"\"\"\"idea\"\"\"\":\"\"\"\"Momentum — Mobile app anti-procrastination basée sur la continuité plutôt que la motivation. Utilise des streaks visuels, notifications intelligentes et gamification pour créer des habitudes durables chez les étudiants et professionnels\"\"\"\"}')",
+      "Bash(npm install @supabase/supabase-js)",
+      "Bash(curl -s \"http://127.0.0.1:3000/api/apple/charts?chart=top-free&country=us&limit=200\")",
+      "Bash(curl -s http://127.0.0.1:3000/api/idea-validator/research -X POST -H \"Content-Type: application/json\" -d '{\"\"\"\"idea\"\"\"\":\"\"\"\"AI Meal Prep Coach that helps users plan meals\"\"\"\"}')",
+      "Bash(npm install -g vercel)",
+      "Bash(vercel --yes)",
+      "Bash(vercel login)",
+      "Bash(vercel login --yes)",
+      "Bash(git add .)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
