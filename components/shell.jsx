@@ -66,7 +66,7 @@ function Sidebar({ route, setRoute }) {
   };
 
   const openWebsite = () => {
-    window.openStandaloneSite?.();
+    window.open(window.location.origin, '_blank', 'noopener,noreferrer');
   };
 
   return (
