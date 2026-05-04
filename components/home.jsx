@@ -1,998 +1,1110 @@
-/* Marketing landing */
+/* Marketing landing for Signal - App Growth Workspace */
 
-const PRODUCT_FEATURE_GROUPS = [
+const PRODUCT_FEATURES = [
+  { id: 'opportunity-finder', label: 'Opportunity Finder', detail: 'Spot keywords you can actually rank for and gaps competitors missed.' },
+  { id: 'keyword-intelligence', label: 'Keyword Intelligence', detail: 'Expand keywords, track rankings, and understand search intent.' },
+  { id: 'competitor-analysis', label: 'Competitor Analysis', detail: 'See positioning pressure, creative patterns, and market overlap.' },
+  { id: 'screenshot-builder', label: 'Screenshot Builder', detail: 'Turn insights into screenshot projects and creative direction.' },
+  { id: 'idea-validator', label: 'Idea Validator', detail: 'Validate app concepts before writing a single line of code.' },
+];
+
+const USE_CASES = [
+  { id: 'find-idea', label: 'Find your next app idea', detail: 'Validate concepts before investing development time.' },
+  { id: 'grow-ranking', label: 'Grow your App Store ranking', detail: 'Target the right keywords and outperform competitors.' },
+  { id: 'optimize-screenshots', label: 'Optimize your screenshots', detail: 'Understand what converts and rebuild your store presence.' },
+  { id: 'analyze-competitors', label: 'Analyze competitors', detail: 'See what they do well, where they fail, and how to win.' },
+];
+
+const WHY_CARDS = [
   {
-    title: 'Discovery',
-    items: [
-      { id: 'discover-opportunities', label: 'Discover Opportunities', detail: 'Surface whitespace, weak categories, and app-growth opportunities.' },
-      { id: 'explore-apps', label: 'Explore Apps', detail: 'Search the landscape and inspect players, listings, and product signals.' },
-      { id: 'market-insights', label: 'Market Insights', detail: 'Turn broad category movement into a clearer strategic read.' },
-      { id: 'hot-app-ideas', label: 'Hot App Ideas', detail: 'Spot promising directions before you commit product effort.' },
-    ],
+    title: 'Find real opportunities',
+    body: 'Spot keywords you can actually rank for. Identify gaps your competitors missed. Validate ideas before you build.',
   },
   {
-    title: 'Analyze',
-    items: [
-      { id: 'keyword-explorer', label: 'Keyword Explorer', detail: 'Expand keywords, intent, and demand from one place.' },
-      { id: 'aso-analyzer', label: 'ASO Analyzer', detail: 'Review metadata quality, screenshots, reviews, and listing health.' },
-      { id: 'reviews', label: 'Reviews Intelligence', detail: 'Extract pain points, claims, and user language from reviews.' },
-      { id: 'rank-history', label: 'Rank History', detail: 'Track movement and visibility across terms and time.' },
-      { id: 'competitors', label: 'Competitors', detail: 'See positioning pressure, creative patterns, and market overlap.' },
-    ],
+    title: 'Understand your market',
+    body: 'Track rankings, competitors, and reviews. See what works — and what doesn\'t. Focus on what moves installs.',
   },
   {
-    title: 'Track & Create',
-    items: [
-      { id: 'app-tracking', label: 'App Tracking', detail: 'Keep tracked apps and their core signals aligned in one workspace.' },
-      { id: 'pricing-calculator', label: 'Pricing Calculator', detail: 'Model international pricing and package framing decisions.' },
-      { id: 'revenue-insights', label: 'Revenue Insights', detail: 'Connect monetization thinking back to positioning and offers.' },
-      { id: 'screenshot-generator', label: 'Screenshot Generator', detail: 'Create screenshot directions and projects from app context.' },
-      { id: 'idea-validator', label: 'Idea Validator', detail: 'Validate a concept before turning it into a project.' },
-      { id: 'ai-agents', label: 'AI Agents', detail: 'Use guided automation to move from insight to action faster.' },
-    ],
-  },
-  {
-    title: 'Workspace',
-    items: [
-      { id: 'my-apps', label: 'My Apps', detail: 'Keep your source apps and metadata anchored in the same place.' },
-      { id: 'my-projects', label: 'My Projects', detail: 'Turn insights into screenshot, launch, and creative workstreams.' },
-      { id: 'creative-systems', label: 'Creative Systems', detail: 'Reuse patterns, layouts, and design directions consistently.' },
-      { id: 'exports', label: 'Exports', detail: 'Package outputs for delivery instead of leaving them in drafts.' },
-    ],
+    title: 'Ship faster',
+    body: 'Generate screenshots, assets, and ASO updates. Turn insights into real projects. Go from idea to execution in one flow.',
   },
 ];
 
-const SOLUTION_PATHS = [
-  { id: 'launches', label: 'New app launches', detail: 'Go from raw concept to validation, positioning, screenshots, and first listing system.' },
-  { id: 'aso-refresh', label: 'ASO refreshes', detail: 'Rework metadata, reviews, visuals, and category language around a sharper listing.' },
-  { id: 'creative-production', label: 'Creative production', detail: 'Turn research and product context into screenshot systems and projects.' },
-  { id: 'competitive-research', label: 'Competitive research', detail: 'Compare rivals, messaging pressure, proof strategies, and whitespace.' },
-  { id: 'pricing-expansion', label: 'Pricing & expansion', detail: 'Model pricing logic and localization decisions before rollout.' },
-  { id: 'team-workflow', label: 'Team workflow', detail: 'Keep growth, strategy, and creative teams aligned on the same source of truth.' },
+const HOW_IT_WORKS_STEPS = [
+  { number: '1', title: 'Import an app or describe your idea', body: 'Paste an App Store link or explain what you want to build.' },
+  { number: '2', title: 'Get the signal', body: 'Signal generates keywords, competitors, positioning, and opportunities.' },
+  { number: '3', title: 'Build and ship', body: 'Turn insights into screenshots, ASO updates, and real deliverables.' },
 ];
 
-const SITE_NAV_LINKS = [
-  { id: 'product', label: 'Product', items: PRODUCT_FEATURE_GROUPS.flatMap((group) => group.items) },
-  { id: 'solution', label: 'Solution', items: SOLUTION_PATHS },
-  { id: 'pricing', label: 'Pricing' },
-  { id: 'contact', label: 'Contact' },
+const PRODUCT_MODULES = [
+  { id: 'opportunity', icon: '🎯', title: 'Opportunity Finder', detail: 'Surface keywords and gaps you can win' },
+  { id: 'keyword', icon: '🔍', title: 'Keyword Explorer', detail: 'Expand and track search terms' },
+  { id: 'tracking', icon: '📊', title: 'App Tracking', detail: 'Monitor rankings and visibility' },
+  { id: 'aso', icon: '⚡', title: 'ASO Analyzer', detail: 'Review metadata and listing health' },
+  { id: 'competitors', icon: '🏁', title: 'Competitor Reports', detail: 'Benchmark against rivals' },
+  { id: 'reviews', icon: '💬', title: 'Reviews', detail: 'Extract pain points from users' },
+  { id: 'screenshot', icon: '🎨', title: 'Screenshot Generator', detail: 'Create store visuals from context' },
+  { id: 'validator', icon: '✨', title: 'Idea Validator', detail: 'Test concepts before building' },
+  { id: 'projects', icon: '📁', title: 'Projects', detail: 'Turn insights into deliverables' },
 ];
 
-const SITE_LOGOS = ['Northstar', 'Velora', 'Framekit', 'Juniper', 'Monark'];
-
-const SITE_WHY_CARDS = [
-  {
-    title: 'Signal Research',
-    body: 'Turn scattered market clues into a readable view of demand, pressure, and opportunity before choosing what to build next.',
-    metric: 'Demand clarity',
-    value: '92%',
-  },
-  {
-    title: 'Narrative Systems',
-    body: 'Shape sharper messaging, proof, and positioning so strategy does not get lost between research and launch.',
-    metric: 'Message lift',
-    value: '+34%',
-  },
-  {
-    title: 'Execution Flow',
-    body: 'Move from insight to pages, offers, and commercial assets in one system instead of rebuilding context across tools.',
-    metric: 'Faster shipping',
-    value: '3x',
-  },
+const USE_CASE_CARDS = [
+  { title: 'Find your next app idea', body: 'Validate concepts before writing a single line of code.' },
+  { title: 'Grow your App Store ranking', body: 'Target the right keywords and outperform competitors.' },
+  { title: 'Fix your screenshots', body: 'Understand what converts and rebuild your store presence.' },
+  { title: 'Analyze competitors', body: 'See what they do well, where they fail, and how to win.' },
 ];
 
-const SITE_TOOL_TABS = [
+const FAQ_ITEMS = [
   {
-    id: 'positioning',
-    label: 'Positioning',
-    title: 'Sharper positioning, before the launch gets expensive',
-    body: 'Signal clarifies who you are for, what angle wins, and where your message still feels interchangeable.',
-    mode: 'positioning',
+    q: 'What is Signal?',
+    a: 'Signal is an app growth workspace that helps you find opportunities, analyze your market, and ship assets faster.',
   },
   {
-    id: 'messaging',
-    label: 'Messaging',
-    title: 'Build a consistent message across pages and offers',
-    body: 'Keep headlines, proof, objections, and call-to-action logic aligned around one commercial narrative.',
-    mode: 'messaging',
+    q: 'Do I need an app to use Signal?',
+    a: 'No. You can start from an idea and still get insights, keywords, and competitors.',
   },
   {
-    id: 'pricing',
-    label: 'Pricing',
-    title: 'Pressure-test pricing before it becomes guesswork',
-    body: 'Compare value framing, package ladders, and monetization logic from the same workspace.',
-    mode: 'pricing',
-  },
-];
-
-const SITE_CORE_FEATURES = [
-  { title: 'Market Mapping', body: 'See where the category is crowded, weak, or wide open.' },
-  { title: 'Message Architecture', body: 'Shape a clearer hierarchy for pages, campaigns, and launches.' },
-  { title: 'Offer Design', body: 'Make packaging and pricing feel intentional instead of improvised.' },
-  { title: 'Proof Systems', body: 'Turn evidence, reviews, and claims into credible conversion assets.' },
-  { title: 'Launch Readiness', body: 'Spot what is still vague before teams commit design and growth effort.' },
-  { title: 'Delivery Handoff', body: 'Keep creative, growth, and stakeholders aligned on the same source of truth.' },
-];
-
-const SITE_ANALYTICS_TABS = [
-  {
-    id: 'signal',
-    label: 'Signal Summary',
-    title: 'A readable executive layer for what changed and what to do next.',
-    mode: 'summary',
+    q: 'How is this different from ASO tools?',
+    a: 'Signal doesn\'t just show data. It connects discovery, analysis, and execution so you know what to do next.',
   },
   {
-    id: 'pages',
-    label: 'Page Review',
-    title: 'See which sections, claims, and proof blocks still weaken conversion momentum.',
-    mode: 'pages',
+    q: 'Can I use this for multiple apps?',
+    a: 'Yes. Signal is built around app workspaces, tracked apps, and projects.',
   },
   {
-    id: 'offers',
-    label: 'Offer Review',
-    title: 'Compare packages, plan framing, and call-to-action strength without leaving the same system.',
-    mode: 'offers',
-  },
-];
-
-const SITE_TESTIMONIALS = [
-  { type: 'stat', value: '41%', label: 'faster page iterations' },
-  {
-    type: 'quote',
-    quote: 'Signal gave us a cleaner story, a better offer structure, and far less debate between strategy and design.',
-    author: 'Lina Morel',
-    role: 'Growth Lead, Vanta Studio',
-    dark: true,
-  },
-  { type: 'stat', value: '$12M', label: 'pipeline influenced by pages rebuilt with clearer positioning' },
-  { type: 'stat', value: '2.8x', label: 'more aligned launch reviews across teams' },
-  {
-    type: 'quote',
-    quote: 'It feels like the missing commercial layer between research, copy, offers, and the final page.',
-    author: 'Marc Delon',
-    role: 'Founder, Northstar Labs',
-  },
-];
-
-const SITE_FAQ = [
-  {
-    q: 'What does Signal actually replace?',
-    a: 'Signal replaces scattered research docs, fragmented messaging notes, rough pricing experiments, and static page briefs with one connected commercial workspace.',
+    q: 'Can I generate screenshots?',
+    a: 'Yes. Signal helps turn app context and market insights into screenshot and creative projects.',
   },
   {
     q: 'Who is Signal for?',
-    a: 'It is built for founders, growth teams, strategists, and creative operators who need better commercial clarity before launch and scaling decisions.',
-  },
-  {
-    q: 'Is this only for landing pages?',
-    a: 'No. Pages are one output. Signal is designed to improve the thinking behind positioning, proof, offers, and how teams ship them.',
-  },
-  {
-    q: 'Can I open the marketing site outside the product UI?',
-    a: 'Yes. The sidebar button opens this marketing site in a standalone tab, separate from the workspace shell.',
+    a: 'Indie makers, app founders, ASO operators, growth marketers, and small app teams.',
   },
 ];
 
-function resolveMarketingVideo() {
-  const configured = window.__SIGNAL_MARKETING_VIDEO__ || null;
-  if (typeof configured === 'string' && configured.trim()) {
-    return { kind: configured.includes('youtube') || configured.includes('vimeo') || configured.includes('loom') ? 'embed' : 'video', src: configured.trim() };
-  }
-  if (configured && typeof configured === 'object' && configured.src) {
-    return {
-      kind: configured.kind || configured.type || 'video',
-      src: configured.src,
-      title: configured.title || 'Signal overview',
-      poster: configured.poster || '',
-    };
-  }
-  return {
-    kind: 'video',
-    src: '/assets/signal-demo.mp4',
-    title: 'Signal overview',
-    poster: '',
-  };
-}
-
-function normalizeEmbedUrl(source) {
-  if (!source) return '';
-  if (source.includes('youtube.com/watch?v=')) {
-    const url = new URL(source);
-    const id = url.searchParams.get('v');
-    return id ? `https://www.youtube-nocookie.com/embed/${id}` : source;
-  }
-  if (source.includes('youtu.be/')) {
-    const id = source.split('youtu.be/')[1]?.split('?')[0];
-    return id ? `https://www.youtube-nocookie.com/embed/${id}` : source;
-  }
-  if (source.includes('vimeo.com/') && !source.includes('/video/')) {
-    const id = source.split('vimeo.com/')[1]?.split('?')[0];
-    return id ? `https://player.vimeo.com/video/${id}` : source;
-  }
-  if (source.includes('loom.com/share/')) {
-    return source.replace('loom.com/share/', 'loom.com/embed/');
-  }
-  return source;
-}
-
-function scrollToSection(id) {
-  const node = document.getElementById(id);
-  if (!node) return;
-  node.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function openStandaloneSite() {
-  const url = new URL(window.location.href);
-  url.searchParams.delete('editor');
-  url.searchParams.delete('projectId');
-  url.searchParams.delete('tab');
-  url.searchParams.set('site', '1');
-  window.open(url.toString(), '_blank', 'noopener,noreferrer');
-}
-
-function readMarketingLocation() {
-  try {
-    const url = new URL(window.location.href);
-    return {
-      page: url.searchParams.get('sitePage') || 'home',
-      focus: url.searchParams.get('siteFocus') || '',
-    };
-  } catch {
-    return { page: 'home', focus: '' };
-  }
-}
-
-function writeMarketingLocation(page, focus = '') {
-  const url = new URL(window.location.href);
-  if (!page || page === 'home') {
-    url.searchParams.delete('sitePage');
-  } else {
-    url.searchParams.set('sitePage', page);
-  }
-  if (focus) {
-    url.searchParams.set('siteFocus', focus);
-  } else {
-    url.searchParams.delete('siteFocus');
-  }
-  window.history.pushState({}, '', url.toString());
-}
-
-function enterWorkspace() {
-  const url = new URL(window.location.href);
-  url.searchParams.delete('site');
-  url.searchParams.delete('sitePage');
-  url.searchParams.delete('siteFocus');
-  window.location.href = url.toString();
-}
-
-function CountUpText({ value, duration = 1400, className = '' }) {
-  const ref = React.useRef(null);
-  const [displayValue, setDisplayValue] = React.useState(() => String(value));
-  const [started, setStarted] = React.useState(false);
-
-  const parsed = React.useMemo(() => {
-    const raw = String(value).trim();
-    const match = raw.match(/^([^0-9+-]*)([+-]?)(\d+(?:\.\d+)?)(.*)$/);
-    if (!match) return null;
-    return {
-      prefix: `${match[1] || ''}${match[2] || ''}`,
-      numeric: Number.parseFloat(match[3]),
-      decimals: (match[3].split('.')[1] || '').length,
-      suffix: match[4] || '',
-    };
-  }, [value]);
-
-  React.useEffect(() => {
-    if (!parsed || started) return undefined;
-    const node = ref.current;
-    if (!node) return undefined;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        setStarted(true);
-        observer.disconnect();
-      });
-    }, { threshold: 0.35 });
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [parsed, started]);
-
-  React.useEffect(() => {
-    if (!parsed || !started) {
-      setDisplayValue(String(value));
-      return undefined;
-    }
-
-    let frameId = 0;
-    const start = performance.now();
-    const animate = (now) => {
-      const progress = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = parsed.numeric * eased;
-      const formatted = parsed.decimals > 0 ? current.toFixed(parsed.decimals) : String(Math.round(current));
-      setDisplayValue(`${parsed.prefix}${formatted}${parsed.suffix}`);
-      if (progress < 1) {
-        frameId = window.requestAnimationFrame(animate);
-      }
-    };
-    frameId = window.requestAnimationFrame(animate);
-    return () => window.cancelAnimationFrame(frameId);
-  }, [parsed, started, duration, value]);
-
-  return <span ref={ref} className={className}>{displayValue}</span>;
-}
-
-function SignalMarketingVideo() {
-  const [errored, setErrored] = React.useState(false);
-  const video = resolveMarketingVideo();
-  const embedSrc = video.kind === 'embed' ? normalizeEmbedUrl(video.src) : '';
+function MarketingHeader({ onCTA }) {
+  const [dropdownOpen, setDropdownOpen] = React.useState(null);
 
   return (
-    <div className="signal-site__video-shell js-reveal">
-      <div className="signal-site__video-topbar">
-        <span className="signal-site__video-pill">Product walkthrough</span>
-        <span className="signal-site__video-meta"><CountUpText value="2" /> min overview</span>
-      </div>
-
-      <div className="signal-site__video-frame">
-        {!errored && video.kind === 'embed' && embedSrc ? (
-          <iframe
-            src={embedSrc}
-            title={video.title || 'Signal video'}
-            loading="lazy"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          />
-        ) : null}
-
-        {!errored && video.kind !== 'embed' ? (
-          <video
-            controls
-            playsInline
-            preload="metadata"
-            poster={video.poster || undefined}
-            onError={() => setErrored(true)}
-          >
-            <source src={video.src} />
-          </video>
-        ) : null}
-
-        {(errored || !video.src) ? (
-          <div className="signal-site__video-fallback">
-            <div className="signal-site__video-fallback-icon"><window.I.Play /></div>
-            <strong>Video integration ready</strong>
-            <span>Set `window.__SIGNAL_MARKETING_VIDEO__` to a `MP4`, `Loom`, `Vimeo`, or `YouTube` source to replace this fallback.</span>
-          </div>
-        ) : null}
-      </div>
-    </div>
-  );
-}
-
-function SiteTopbar({ standalone = false, setRoute, onNavigateMarketing }) {
-  const [openMenu, setOpenMenu] = React.useState(null);
-  const rootRef = React.useRef(null);
-
-  React.useEffect(() => {
-    const onPointerDown = (event) => {
-      if (!rootRef.current?.contains(event.target)) {
-        setOpenMenu(null);
-      }
-    };
-    document.addEventListener('mousedown', onPointerDown);
-    return () => document.removeEventListener('mousedown', onPointerDown);
-  }, []);
-
-  const navigateToMarketing = (page, focus = '') => {
-    writeMarketingLocation(page, focus);
-    onNavigateMarketing?.(page, focus);
-    setOpenMenu(null);
-  };
-
-  return (
-    <header ref={rootRef} className="signal-site__topbar">
-      <div className="signal-site__nav-shell">
-        <button className="signal-site__brand" onClick={() => scrollToSection('hero')}>
-          <span className="signal-site__brand-mark">S</span>
-          <span>Signal</span>
-        </button>
-        <nav className="signal-site__nav">
-          {SITE_NAV_LINKS.map((item) => (
-            <div key={item.id} className="signal-site__nav-item">
-              <button
-                className={`signal-site__nav-trigger${openMenu === item.id ? ' is-open' : ''}`}
-                onClick={() => {
-                  if (item.items) {
-                    setOpenMenu((value) => value === item.id ? null : item.id);
-                    return;
-                  }
-                  if (item.id === 'pricing' || item.id === 'contact') {
-                    navigateToMarketing('home', item.id);
-                    return;
-                  }
-                  scrollToSection(item.id);
-                }}
-              >
-                <span>{item.label}</span>
-                {item.items ? <window.I.ChevronD style={{ width: 14, height: 14 }} /> : null}
-              </button>
-              {item.items && openMenu === item.id ? (
-                item.id === 'product' ? (
-                  <div className="signal-site__nav-dropdown signal-site__nav-dropdown--product">
-                    {PRODUCT_FEATURE_GROUPS.map((group) => (
-                      <div key={group.title} className="signal-site__nav-dropdown-col">
-                        <div className="signal-site__nav-dropdown-title">{group.title}</div>
-                        {group.items.map((entry) => (
-                          <button
-                            key={entry.id}
-                            className="signal-site__nav-dropdown-item"
-                            onClick={() => {
-                              navigateToMarketing(item.id, entry.id);
-                            }}
-                          >
-                            <strong>{entry.label}</strong>
-                            <span>{entry.detail}</span>
-                          </button>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="signal-site__nav-dropdown">
-                    {item.items.map((entry) => (
-                      <button
-                        key={entry.id}
-                        className="signal-site__nav-dropdown-item"
-                        onClick={() => {
-                          navigateToMarketing(item.id, entry.id);
-                        }}
-                      >
-                        <strong>{entry.label}</strong>
-                        <span>{entry.detail}</span>
-                      </button>
-                    ))}
-                  </div>
-                )
-              ) : null}
-            </div>
-          ))}
-        </nav>
-        <div className="signal-site__nav-actions">
-          {!standalone ? <button className="signal-site__link-btn" onClick={() => setRoute?.({ screen: 'settings' })}>Login</button> : null}
-          <button className="signal-site__cta-btn" onClick={standalone ? enterWorkspace : openStandaloneSite}>Get a Demo</button>
+    <header style={{
+      position: 'sticky',
+      top: 0,
+      zIndex: 1000,
+      background: 'rgba(255, 255, 255, 0.95)',
+      backdropFilter: 'blur(12px)',
+      borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
+    }}>
+      <div style={{
+        maxWidth: 1280,
+        margin: '0 auto',
+        padding: '16px 24px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}>
+        {/* Logo */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+        }}>
+          <div style={{
+            width: 32,
+            height: 32,
+            borderRadius: 8,
+            background: '#F4621F',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontWeight: 700,
+            color: 'white',
+            fontSize: 16,
+          }}>S</div>
+          <span style={{ fontWeight: 700, fontSize: 18, color: '#111' }}>Signal</span>
         </div>
+
+        {/* Nav */}
+        <nav style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
+          <div style={{ position: 'relative' }}>
+            <button
+              style={{
+                background: 'none',
+                border: 'none',
+                fontSize: 15,
+                color: '#444',
+                fontWeight: 500,
+                cursor: 'pointer',
+                padding: '8px 0',
+              }}
+              onMouseEnter={() => setDropdownOpen('product')}
+              onMouseLeave={() => setDropdownOpen(null)}
+            >
+              Product ▾
+            </button>
+            {dropdownOpen === 'product' && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  background: 'white',
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  borderRadius: 12,
+                  padding: '12px 0',
+                  minWidth: 240,
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                  marginTop: 4,
+                }}
+                onMouseEnter={() => setDropdownOpen('product')}
+                onMouseLeave={() => setDropdownOpen(null)}
+              >
+                {PRODUCT_FEATURES.map(item => (
+                  <a key={item.id} href={`#${item.id}`} style={{
+                    display: 'block',
+                    padding: '10px 20px',
+                    textDecoration: 'none',
+                    color: '#111',
+                  }}>
+                    <div style={{ fontWeight: 600, fontSize: 14 }}>{item.label}</div>
+                    <div style={{ fontSize: 12, color: '#666', marginTop: 2 }}>{item.detail}</div>
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div style={{ position: 'relative' }}>
+            <button
+              style={{
+                background: 'none',
+                border: 'none',
+                fontSize: 15,
+                color: '#444',
+                fontWeight: 500,
+                cursor: 'pointer',
+                padding: '8px 0',
+              }}
+              onMouseEnter={() => setDropdownOpen('usecases')}
+              onMouseLeave={() => setDropdownOpen(null)}
+            >
+              Use Cases ▾
+            </button>
+            {dropdownOpen === 'usecases' && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  background: 'white',
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  borderRadius: 12,
+                  padding: '12px 0',
+                  minWidth: 240,
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                  marginTop: 4,
+                }}
+                onMouseEnter={() => setDropdownOpen('usecases')}
+                onMouseLeave={() => setDropdownOpen(null)}
+              >
+                {USE_CASES.map(item => (
+                  <a key={item.id} href={`#${item.id}`} style={{
+                    display: 'block',
+                    padding: '10px 20px',
+                    textDecoration: 'none',
+                    color: '#111',
+                  }}>
+                    <div style={{ fontWeight: 600, fontSize: 14 }}>{item.label}</div>
+                    <div style={{ fontSize: 12, color: '#666', marginTop: 2 }}>{item.detail}</div>
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <a href="#pricing" style={{ fontSize: 15, color: '#444', fontWeight: 500, textDecoration: 'none' }}>Pricing</a>
+
+          <div style={{ position: 'relative' }}>
+            <button
+              style={{
+                background: 'none',
+                border: 'none',
+                fontSize: 15,
+                color: '#444',
+                fontWeight: 500,
+                cursor: 'pointer',
+                padding: '8px 0',
+              }}
+              onMouseEnter={() => setDropdownOpen('resources')}
+              onMouseLeave={() => setDropdownOpen(null)}
+            >
+              Resources ▾
+            </button>
+            {dropdownOpen === 'resources' && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  right: 0,
+                  background: 'white',
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  borderRadius: 12,
+                  padding: '12px 0',
+                  minWidth: 180,
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                  marginTop: 4,
+                }}
+                onMouseEnter={() => setDropdownOpen('resources')}
+                onMouseLeave={() => setDropdownOpen(null)}
+              >
+                {['Blog', 'Guides', 'Changelog', 'Help Center'].map(item => (
+                  <a key={item} href="#" style={{
+                    display: 'block',
+                    padding: '10px 20px',
+                    textDecoration: 'none',
+                    color: '#111',
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}>
+                    {item}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <button
+            onClick={onCTA}
+            style={{
+              background: '#F4621F',
+              color: 'white',
+              border: 'none',
+              padding: '12px 24px',
+              borderRadius: 9999,
+              fontSize: 15,
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >
+            Start for free
+          </button>
+        </nav>
       </div>
     </header>
   );
 }
 
-function MarketingMockup({ mode }) {
-  if (mode === 'pricing') {
-    return (
-      <div className="signal-site__mock-window">
-      <div className="signal-site__mock-window-head">
-        <span>Offer ladder</span>
-        <span>Updated <CountUpText value="2" />m ago</span>
-      </div>
-        <div className="signal-site__pricing-mock-grid">
-          <div className="signal-site__pricing-mock-card">
-            <div className="signal-site__pricing-mock-name">Starter</div>
-            <div className="signal-site__pricing-mock-price">€29</div>
-            <div className="signal-site__pricing-mock-copy">Simple entry point for focused teams.</div>
-          </div>
-          <div className="signal-site__pricing-mock-card signal-site__pricing-mock-card--accent">
-            <div className="signal-site__pricing-mock-badge">Best fit</div>
-            <div className="signal-site__pricing-mock-name">Growth</div>
-            <div className="signal-site__pricing-mock-price">€89</div>
-            <div className="signal-site__pricing-mock-copy">Best for commercial systems, offers, and launch execution.</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (mode === 'messaging') {
-    return (
-      <div className="signal-site__mock-window">
-      <div className="signal-site__mock-window-head">
-        <span>Message architecture</span>
-        <span><CountUpText value="6" /> proof blocks</span>
-      </div>
-        <div className="signal-site__message-mock">
-          <div className="signal-site__message-line signal-site__message-line--xl" />
-          <div className="signal-site__message-line signal-site__message-line--md" />
-          <div className="signal-site__message-grid">
-            <div className="signal-site__message-note">
-              <strong>Primary claim</strong>
-              <span>Sharper promise with a clearer buyer outcome.</span>
-            </div>
-            <div className="signal-site__message-note">
-              <strong>Proof</strong>
-              <span>Customer evidence and commercial credibility where it matters.</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+function HeroSection({ onCTA }) {
   return (
-    <div className="signal-site__mock-window">
-      <div className="signal-site__mock-window-head">
-        <span>Market view</span>
-        <span><CountUpText value="12" /> active signals</span>
-      </div>
-      <div className="signal-site__chart">
-        <div className="signal-site__chart-bars">
-          <span style={{ height: '36%' }} />
-          <span style={{ height: '52%' }} />
-          <span style={{ height: '68%' }} />
-          <span style={{ height: '58%' }} />
-          <span style={{ height: '84%' }} />
-          <span style={{ height: '74%' }} />
+    <section style={{
+      padding: '120px 24px',
+      textAlign: 'center',
+      background: 'linear-gradient(180deg, #fff 0%, #fafafa 100%)',
+    }}>
+      <div style={{ maxWidth: 960, margin: '0 auto' }}>
+        <h1 style={{
+          fontSize: 72,
+          fontWeight: 800,
+          lineHeight: 1.1,
+          marginBottom: 24,
+          color: '#111',
+          letterSpacing: '-0.03em',
+        }}>
+          Find the signal.<br />
+          Build what matters.
+        </h1>
+
+        <p style={{
+          fontSize: 22,
+          lineHeight: 1.6,
+          color: '#444',
+          marginBottom: 48,
+          maxWidth: 720,
+          margin: '0 auto 48px',
+        }}>
+          Stop guessing what to build or optimize. Signal turns any app — or idea — into clear opportunities, keywords, competitors, and assets you can ship.
+        </p>
+
+        <div style={{ display: 'flex', gap: 16, justifyContent: 'center', marginBottom: 16 }}>
+          <button
+            onClick={onCTA}
+            style={{
+              background: '#F4621F',
+              color: 'white',
+              border: 'none',
+              padding: '16px 32px',
+              borderRadius: 9999,
+              fontSize: 17,
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >
+            Start for free
+          </button>
+          <button
+            style={{
+              background: 'white',
+              color: '#333',
+              border: '1px solid #ddd',
+              padding: '16px 32px',
+              borderRadius: 9999,
+              fontSize: 17,
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >
+            See how it works
+          </button>
         </div>
-        <div className="signal-site__chart-summary">
-          <div>
-            <strong>Clear whitespace</strong>
-            <span>Opportunity around commercial clarity and proof quality.</span>
-          </div>
-          <div>
-            <strong>Pressure zone</strong>
-            <span>Competitors cluster around the same generic message.</span>
+
+        <p style={{ fontSize: 14, color: '#888', margin: 0 }}>
+          No credit card required
+        </p>
+
+        {/* Hero visual placeholder */}
+        <div style={{
+          marginTop: 80,
+          borderRadius: 16,
+          overflow: 'hidden',
+          boxShadow: '0 24px 80px rgba(0,0,0,0.15)',
+          border: '1px solid rgba(0,0,0,0.1)',
+        }}>
+          <div style={{
+            aspectRatio: '16/9',
+            background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+            fontSize: 18,
+            fontWeight: 500,
+          }}>
+            Dashboard Preview
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
-function AnalyticsMock({ mode }) {
-  if (mode === 'pages') {
-    return (
-      <div className="signal-site__analytics-mock">
-        <div className="signal-site__analytics-toolbar">
-          <span className="signal-site__tag">Live review</span>
-          <span>Landing page audit</span>
-        </div>
-        <div className="signal-site__analytics-table">
-          {[
-            ['Hero promise', 'Strong', 'Clear but too generic'],
-            ['Proof block', 'Weak', 'Needs sharper evidence'],
-            ['Pricing CTA', 'Medium', 'Plan framing still unclear'],
-            ['FAQ', 'Strong', 'Good objection handling'],
-          ].map(([name, tone, note]) => (
-            <div key={name} className="signal-site__analytics-row">
-              <span>{name}</span>
-              <span>{tone}</span>
-              <span>{note}</span>
+function CredibilityStrip() {
+  return (
+    <section style={{
+      padding: '60px 24px',
+      textAlign: 'center',
+      borderBottom: '1px solid rgba(0,0,0,0.08)',
+    }}>
+      <p style={{
+        fontSize: 16,
+        color: '#666',
+        marginBottom: 32,
+      }}>
+        Built for indie makers, ASO teams, app founders, and growth operators
+      </p>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: 48,
+        flexWrap: 'wrap',
+      }}>
+        {['App Store research', 'Keyword tracking', 'Competitor intelligence', 'Screenshot workflows'].map(badge => (
+          <div key={badge} style={{
+            fontSize: 14,
+            fontWeight: 600,
+            color: '#888',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+          }}>
+            {badge}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function WhatYouGetSection() {
+  return (
+    <section style={{
+      padding: '120px 24px',
+      background: 'white',
+    }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <h2 style={{
+          fontSize: 48,
+          fontWeight: 800,
+          textAlign: 'center',
+          marginBottom: 80,
+          color: '#111',
+        }}>
+          Everything you need to grow an app — in one workspace
+        </h2>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gap: 32,
+        }}>
+          {WHY_CARDS.map((card, i) => (
+            <div key={i} style={{
+              background: 'white',
+              border: '1px solid rgba(0,0,0,0.1)',
+              borderRadius: 24,
+              padding: 48,
+            }}>
+              <h3 style={{
+                fontSize: 24,
+                fontWeight: 700,
+                marginBottom: 16,
+                color: '#111',
+              }}>
+                {card.title}
+              </h3>
+              <p style={{
+                fontSize: 16,
+                lineHeight: 1.7,
+                color: '#555',
+                margin: 0,
+              }}>
+                {card.body}
+              </p>
             </div>
           ))}
         </div>
       </div>
-    );
-  }
-
-  if (mode === 'offers') {
-    return (
-      <div className="signal-site__analytics-mock">
-        <div className="signal-site__offer-grid">
-          <div className="signal-site__offer-card">
-            <strong>Starter</strong>
-            <span>Better entry price, weaker differentiation.</span>
-          </div>
-          <div className="signal-site__offer-card signal-site__offer-card--accent">
-            <strong>Growth</strong>
-            <span>Best margin and clearest commercial story.</span>
-          </div>
-          <div className="signal-site__offer-card">
-            <strong>Studio</strong>
-            <span>Strong perceived value, needs clearer scope language.</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="signal-site__analytics-mock">
-      <div className="signal-site__summary-grid">
-        <div className="signal-site__summary-card">
-          <strong>Story drift</strong>
-          <span>Pages and pricing are not reinforcing the same promise.</span>
-        </div>
-        <div className="signal-site__summary-card">
-          <strong>Proof gap</strong>
-          <span>Value claims outpace evidence across the current page.</span>
-        </div>
-        <div className="signal-site__summary-card">
-          <strong>Next move</strong>
-          <span>Rebuild hero, pricing framing, and testimonial order first.</span>
-        </div>
-      </div>
-    </div>
+    </section>
   );
 }
 
-function ProductOverviewPage({ focusId }) {
+function HowItWorksSection() {
   return (
-    <div className="signal-site__subpage">
-      <section className="signal-site__subhero js-reveal">
-        <div className="signal-site__eyebrow signal-site__eyebrow--light">Product overview</div>
-        <h1>The full Signal platform, explained through the jobs teams actually need done.</h1>
-        <p>
-          Signal is not one feature with a long tail of add-ons. It is a connected workspace that helps teams discover opportunities,
-          diagnose what matters, create stronger assets, and ship with clearer alignment.
-        </p>
-      </section>
+    <section style={{
+      padding: '120px 24px',
+      background: '#fafafa',
+    }}>
+      <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+        <h2 style={{
+          fontSize: 48,
+          fontWeight: 800,
+          textAlign: 'center',
+          marginBottom: 80,
+          color: '#111',
+        }}>
+          From idea to shipped assets — in minutes
+        </h2>
 
-      {PRODUCT_FEATURE_GROUPS.map((group, groupIndex) => (
-        <section key={group.title} className={`signal-site__product-band js-reveal${groupIndex % 2 === 1 ? ' is-reversed' : ''}`}>
-          <div className="signal-site__product-band-copy">
-            <div className="signal-site__eyebrow signal-site__eyebrow--light">{group.title}</div>
-            <h2>{group.title} is where teams {groupIndex === 0 ? 'find the opportunity' : groupIndex === 1 ? 'understand what is weak' : groupIndex === 2 ? 'turn insight into execution' : 'keep the whole system aligned'}.</h2>
-            <p>
-              {group.title === 'Discovery' && 'Use these surfaces to scan the market, inspect the landscape, and identify where a listing, idea, or category still has room to win.'}
-              {group.title === 'Analyze' && 'This is the diagnostic layer: keywords, ASO, reviews, ranks, and competitors become one readable set of signals instead of separate opinions.'}
-              {group.title === 'Track & Create' && 'When the direction is clear, Signal helps teams monitor important movement and convert strategy into screenshots, projects, and monetization decisions.'}
-              {group.title === 'Workspace' && 'The workspace layer keeps apps, projects, systems, and exports tied together so execution does not drift after the strategy is decided.'}
+        <div style={{ display: 'grid', gap: 48 }}>
+          {HOW_IT_WORKS_STEPS.map(step => (
+            <div key={step.number} style={{
+              display: 'flex',
+              gap: 32,
+              alignItems: 'flex-start',
+            }}>
+              <div style={{
+                width: 64,
+                height: 64,
+                borderRadius: '50%',
+                background: '#F4621F',
+                color: 'white',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 28,
+                fontWeight: 800,
+                flexShrink: 0,
+              }}>
+                {step.number}
+              </div>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: 28,
+                  fontWeight: 700,
+                  marginBottom: 12,
+                  color: '#111',
+                }}>
+                  {step.title}
+                </h3>
+                <p style={{
+                  fontSize: 18,
+                  lineHeight: 1.6,
+                  color: '#555',
+                  margin: 0,
+                }}>
+                  {step.body}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProductModulesSection() {
+  return (
+    <section style={{
+      padding: '120px 24px',
+      background: 'white',
+    }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <h2 style={{
+          fontSize: 48,
+          fontWeight: 800,
+          textAlign: 'center',
+          marginBottom: 24,
+          color: '#111',
+        }}>
+          One workspace. Not 10 tools.
+        </h2>
+
+        <p style={{
+          fontSize: 20,
+          textAlign: 'center',
+          color: '#555',
+          marginBottom: 80,
+          maxWidth: 720,
+          margin: '0 auto 80px',
+        }}>
+          No more switching between dashboards, spreadsheets, and guesswork. Signal connects discovery, analysis, and execution in one place.
+        </p>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+          gap: 24,
+        }}>
+          {PRODUCT_MODULES.map(module => (
+            <div key={module.id} style={{
+              background: 'white',
+              border: '1px solid rgba(0,0,0,0.08)',
+              borderRadius: 16,
+              padding: 32,
+              transition: 'all 0.2s',
+            }}>
+              <div style={{ fontSize: 36, marginBottom: 16 }}>{module.icon}</div>
+              <h4 style={{
+                fontSize: 18,
+                fontWeight: 700,
+                marginBottom: 8,
+                color: '#111',
+              }}>
+                {module.title}
+              </h4>
+              <p style={{
+                fontSize: 14,
+                color: '#666',
+                margin: 0,
+                lineHeight: 1.6,
+              }}>
+                {module.detail}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function UseCasesSection() {
+  return (
+    <section style={{
+      padding: '120px 24px',
+      background: '#fafafa',
+    }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <h2 style={{
+          fontSize: 48,
+          fontWeight: 800,
+          textAlign: 'center',
+          marginBottom: 80,
+          color: '#111',
+        }}>
+          Built for builders
+        </h2>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+          gap: 32,
+        }}>
+          {USE_CASE_CARDS.map((card, i) => (
+            <div key={i} style={{
+              background: 'white',
+              border: '1px solid rgba(0,0,0,0.1)',
+              borderRadius: 20,
+              padding: 40,
+            }}>
+              <h3 style={{
+                fontSize: 22,
+                fontWeight: 700,
+                marginBottom: 12,
+                color: '#111',
+              }}>
+                {card.title}
+              </h3>
+              <p style={{
+                fontSize: 15,
+                lineHeight: 1.6,
+                color: '#555',
+                margin: 0,
+              }}>
+                {card.body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PositioningSection() {
+  return (
+    <section style={{
+      padding: '120px 24px',
+      background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
+      color: 'white',
+    }}>
+      <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
+        <h2 style={{
+          fontSize: 56,
+          fontWeight: 800,
+          marginBottom: 32,
+          color: 'white',
+        }}>
+          Stop building blindly
+        </h2>
+        <p style={{
+          fontSize: 22,
+          lineHeight: 1.6,
+          marginBottom: 48,
+          opacity: 0.9,
+        }}>
+          Most apps fail because decisions are based on assumptions. Signal replaces guesswork with data, context, and actionable insights.
+        </p>
+        <p style={{
+          fontSize: 28,
+          fontWeight: 700,
+          margin: 0,
+          color: '#F4621F',
+        }}>
+          Know what to build. Know what to fix. Know what to ship.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function TestimonialsSection() {
+  return (
+    <section style={{
+      padding: '120px 24px',
+      background: 'white',
+    }}>
+      <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+        <h2 style={{
+          fontSize: 36,
+          fontWeight: 700,
+          textAlign: 'center',
+          marginBottom: 60,
+          color: '#111',
+        }}>
+          Early founder feedback
+        </h2>
+
+        <div style={{
+          display: 'grid',
+          gap: 32,
+        }}>
+          {[
+            "Signal helped me turn a vague app idea into a concrete launch plan.",
+            "Instead of staring at ASO data, I finally knew what to do next.",
+            "This feels less like a dashboard and more like a growth workspace."
+          ].map((quote, i) => (
+            <div key={i} style={{
+              background: '#fafafa',
+              borderRadius: 16,
+              padding: 32,
+              fontSize: 18,
+              fontStyle: 'italic',
+              color: '#333',
+            }}>
+              "{quote}"
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PricingSection({ onCTA }) {
+  const plans = [
+    {
+      name: 'Starter',
+      subtitle: 'For indie makers getting started',
+      features: [
+        '1 app workspace',
+        'Idea validation',
+        'Basic keyword research',
+        'Screenshot project starter',
+      ],
+      cta: 'Start for free',
+      highlight: false,
+    },
+    {
+      name: 'Growth',
+      subtitle: 'For apps that want traction',
+      features: [
+        'Multiple app workspaces',
+        'Keyword tracking',
+        'Competitor analysis',
+        'Review insights',
+        'Screenshot generation',
+      ],
+      cta: 'Start for free',
+      highlight: true,
+    },
+    {
+      name: 'Pro',
+      subtitle: 'For teams that scale',
+      features: [
+        'Team workspaces',
+        'Advanced reports',
+        'Export packs',
+        'Priority workflows',
+      ],
+      cta: 'Contact us',
+      highlight: false,
+    },
+  ];
+
+  return (
+    <section id="pricing" style={{
+      padding: '120px 24px',
+      background: '#fafafa',
+    }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <h2 style={{
+          fontSize: 48,
+          fontWeight: 800,
+          textAlign: 'center',
+          marginBottom: 80,
+          color: '#111',
+        }}>
+          Simple pricing. No surprises.
+        </h2>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: 32,
+        }}>
+          {plans.map(plan => (
+            <div key={plan.name} style={{
+              background: 'white',
+              border: plan.highlight ? '2px solid #F4621F' : '1px solid rgba(0,0,0,0.1)',
+              borderRadius: 24,
+              padding: 40,
+              position: 'relative',
+            }}>
+              {plan.highlight && (
+                <div style={{
+                  position: 'absolute',
+                  top: -12,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  background: '#F4621F',
+                  color: 'white',
+                  padding: '4px 16px',
+                  borderRadius: 9999,
+                  fontSize: 12,
+                  fontWeight: 700,
+                }}>
+                  MOST POPULAR
+                </div>
+              )}
+
+              <h3 style={{
+                fontSize: 28,
+                fontWeight: 800,
+                marginBottom: 8,
+                color: '#111',
+              }}>
+                {plan.name}
+              </h3>
+
+              <p style={{
+                fontSize: 15,
+                color: '#666',
+                marginBottom: 32,
+              }}>
+                {plan.subtitle}
+              </p>
+
+              <ul style={{
+                listStyle: 'none',
+                padding: 0,
+                margin: '0 0 32px 0',
+              }}>
+                {plan.features.map(feature => (
+                  <li key={feature} style={{
+                    fontSize: 15,
+                    color: '#333',
+                    marginBottom: 12,
+                    paddingLeft: 24,
+                    position: 'relative',
+                  }}>
+                    <span style={{
+                      position: 'absolute',
+                      left: 0,
+                      color: '#22c55e',
+                      fontWeight: 700,
+                    }}>✓</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                onClick={onCTA}
+                style={{
+                  width: '100%',
+                  background: plan.highlight ? '#F4621F' : 'white',
+                  color: plan.highlight ? 'white' : '#333',
+                  border: plan.highlight ? 'none' : '1px solid #ddd',
+                  padding: '14px 24px',
+                  borderRadius: 9999,
+                  fontSize: 16,
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                {plan.cta}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FAQSection() {
+  const [openIndex, setOpenIndex] = React.useState(null);
+
+  return (
+    <section style={{
+      padding: '120px 24px',
+      background: 'white',
+    }}>
+      <div style={{ maxWidth: 800, margin: '0 auto' }}>
+        <h2 style={{
+          fontSize: 48,
+          fontWeight: 800,
+          textAlign: 'center',
+          marginBottom: 80,
+          color: '#111',
+        }}>
+          Frequently Asked Questions
+        </h2>
+
+        <div style={{ display: 'grid', gap: 16 }}>
+          {FAQ_ITEMS.map((item, i) => (
+            <div key={i} style={{
+              borderBottom: '1px solid rgba(0,0,0,0.08)',
+            }}>
+              <button
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                style={{
+                  width: '100%',
+                  background: 'none',
+                  border: 'none',
+                  padding: '24px 0',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                }}
+              >
+                <span style={{
+                  fontSize: 20,
+                  fontWeight: 700,
+                  color: '#111',
+                }}>
+                  {item.q}
+                </span>
+                <span style={{
+                  fontSize: 24,
+                  color: '#888',
+                  transition: 'transform 0.2s',
+                  transform: openIndex === i ? 'rotate(45deg)' : 'rotate(0)',
+                }}>
+                  +
+                </span>
+              </button>
+              {openIndex === i && (
+                <div style={{
+                  padding: '0 0 24px 0',
+                  fontSize: 16,
+                  lineHeight: 1.7,
+                  color: '#555',
+                }}>
+                  {item.a}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FinalCTASection({ onCTA }) {
+  return (
+    <section style={{
+      padding: '120px 24px',
+      background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
+      color: 'white',
+      textAlign: 'center',
+    }}>
+      <div style={{ maxWidth: 700, margin: '0 auto' }}>
+        <h2 style={{
+          fontSize: 56,
+          fontWeight: 800,
+          marginBottom: 48,
+          color: 'white',
+          lineHeight: 1.2,
+        }}>
+          Stop guessing.<br />
+          Start building what works.
+        </h2>
+
+        <button
+          onClick={onCTA}
+          style={{
+            background: '#F4621F',
+            color: 'white',
+            border: 'none',
+            padding: '18px 40px',
+            borderRadius: 9999,
+            fontSize: 18,
+            fontWeight: 600,
+            cursor: 'pointer',
+            marginBottom: 16,
+          }}
+        >
+          Start for free
+        </button>
+
+        <p style={{
+          fontSize: 14,
+          color: 'rgba(255,255,255,0.6)',
+          margin: 0,
+        }}>
+          No credit card required
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function MarketingFooter() {
+  return (
+    <footer style={{
+      padding: '80px 24px 40px',
+      background: '#111',
+      color: 'white',
+    }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: 48,
+          marginBottom: 60,
+        }}>
+          <div>
+            <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 16 }}>Signal</div>
+            <p style={{ fontSize: 14, color: '#888', lineHeight: 1.6 }}>
+              App growth workspace for indie makers and small teams.
             </p>
           </div>
-          <div className="signal-site__product-band-grid">
-            {group.items.map((item) => (
-              <article key={item.id} id={item.id} className={`signal-site__feature-catalog-card${focusId === item.id ? ' is-focused' : ''}`}>
-                <strong>{item.label}</strong>
-                <p>{item.detail}</p>
-              </article>
+
+          <div>
+            <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 16, opacity: 0.5 }}>PRODUCT</div>
+            {PRODUCT_FEATURES.map(item => (
+              <div key={item.id} style={{ fontSize: 14, color: '#aaa', marginBottom: 8 }}>
+                {item.label}
+              </div>
             ))}
           </div>
-        </section>
-      ))}
-    </div>
+
+          <div>
+            <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 16, opacity: 0.5 }}>USE CASES</div>
+            {USE_CASES.map(item => (
+              <div key={item.id} style={{ fontSize: 14, color: '#aaa', marginBottom: 8 }}>
+                {item.label}
+              </div>
+            ))}
+          </div>
+
+          <div>
+            <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 16, opacity: 0.5 }}>RESOURCES</div>
+            {['Blog', 'Guides', 'Changelog', 'Help Center'].map(item => (
+              <div key={item} style={{ fontSize: 14, color: '#aaa', marginBottom: 8 }}>
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div style={{
+          borderTop: '1px solid #333',
+          paddingTop: 32,
+          display: 'flex',
+          justifyContent: 'space-between',
+          fontSize: 13,
+          color: '#666',
+        }}>
+          <div>© 2024 Signal. All rights reserved.</div>
+          <div style={{ display: 'flex', gap: 24 }}>
+            <a href="#" style={{ color: '#666', textDecoration: 'none' }}>Privacy</a>
+            <a href="#" style={{ color: '#666', textDecoration: 'none' }}>Terms</a>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 }
 
-function SolutionOverviewPage({ focusId }) {
-  return (
-    <div className="signal-site__subpage">
-      <section className="signal-site__subhero js-reveal">
-        <div className="signal-site__eyebrow signal-site__eyebrow--light">Solution overview</div>
-        <h1>Use Signal for the full commercial workflow, not just one isolated task.</h1>
-        <p>
-          Whether you are validating a new concept, refreshing an App Store presence, producing screenshot systems, or aligning a
-          growth team, Signal gives each workflow a clearer path from insight to output.
-        </p>
-      </section>
-
-      <section className="signal-site__subsection js-reveal">
-        <div className="signal-site__subsection-head">
-          <div className="signal-site__eyebrow signal-site__eyebrow--light">Use cases</div>
-          <h2>Different workflows. One commercial system.</h2>
-          <p>Signal adapts to the real scenario in front of the team instead of forcing everyone through the same generic playbook.</p>
-        </div>
-        <div className="signal-site__solution-journey">
-          {SOLUTION_PATHS.map((item, index) => (
-            <article key={item.id} id={item.id} className={`signal-site__solution-journey-card${focusId === item.id ? ' is-focused' : ''}`}>
-              <div className="signal-site__solution-journey-meta">
-                <span className="signal-site__solution-step">0{index + 1}</span>
-                <strong>{item.label}</strong>
-              </div>
-              <div className="signal-site__solution-journey-body">
-                <p>{item.detail}</p>
-                <div className="signal-site__solution-outcome">Best when you need clearer direction, tighter execution, and less back-and-forth between strategy and production.</div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-    </div>
-  );
-}
-
-function MarketingLanding({ standalone = false, setRoute }) {
-  const [activeTool, setActiveTool] = React.useState('positioning');
-  const [activeAnalytics, setActiveAnalytics] = React.useState('signal');
-  const [yearly, setYearly] = React.useState(true);
-  const [openFaq, setOpenFaq] = React.useState(SITE_FAQ[0]?.q || null);
-  const initialMarketingLocation = React.useMemo(() => readMarketingLocation(), []);
-  const [marketingPage, setMarketingPage] = React.useState(initialMarketingLocation.page);
-  const [marketingFocus, setMarketingFocus] = React.useState(initialMarketingLocation.focus);
-
-  const activeToolData = SITE_TOOL_TABS.find((item) => item.id === activeTool) || SITE_TOOL_TABS[0];
-  const activeAnalyticsData = SITE_ANALYTICS_TABS.find((item) => item.id === activeAnalytics) || SITE_ANALYTICS_TABS[0];
-
-  React.useEffect(() => {
-    const nodes = Array.from(document.querySelectorAll('.js-reveal'));
-    if (!nodes.length) return undefined;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
-    nodes.forEach((node) => observer.observe(node));
-    return () => observer.disconnect();
-  }, []);
-
-  React.useEffect(() => {
-    const handlePopState = () => {
-      const next = readMarketingLocation();
-      setMarketingPage(next.page);
-      setMarketingFocus(next.focus);
-    };
-    window.addEventListener('popstate', handlePopState);
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, []);
-
-  const handleMarketingNavigate = (page, focus = '') => {
-    setMarketingPage(page || 'home');
-    setMarketingFocus(focus || '');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+function MarketingLanding({ setRoute }) {
+  const handleCTA = () => {
+    // Go to onboarding
+    setRoute({ screen: 'onboarding' });
   };
 
-  React.useEffect(() => {
-    if (!marketingFocus) return;
-    const id = window.setTimeout(() => {
-      const target = document.getElementById(marketingFocus);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } else if (marketingPage === 'home') {
-        scrollToSection(marketingFocus);
-      }
-    }, 80);
-    return () => window.clearTimeout(id);
-  }, [marketingPage, marketingFocus]);
-
   return (
-    <div className={`signal-site signal-site--light${standalone ? ' signal-site--standalone' : ''}`}>
-      <div className="signal-site__paper-grid" />
-      <SiteTopbar standalone={standalone} setRoute={setRoute} onNavigateMarketing={handleMarketingNavigate} />
-
-      <main className="signal-site__main">
-        {marketingPage === 'product' ? (
-          <ProductOverviewPage focusId={marketingFocus} />
-        ) : marketingPage === 'solution' ? (
-          <SolutionOverviewPage focusId={marketingFocus} />
-        ) : (
-          <>
-        <section id="hero" className="signal-site__hero signal-site__hero--centered js-reveal">
-          <div className="signal-site__eyebrow signal-site__eyebrow--light">Trusted by modern growth teams</div>
-          <h1>Turn market noise into sharper positioning, pages, and pricing.</h1>
-          <p>
-            Signal is the commercial workspace for teams who need cleaner decisions before they commit design,
-            launches, campaigns, and monetization bets.
-          </p>
-          <div className="signal-site__hero-actions signal-site__hero-actions--center">
-            <button className="signal-site__cta-btn signal-site__cta-btn--lg" onClick={() => scrollToSection('pricing')}>Start 14-day trial</button>
-            <span className="signal-site__hero-note">No credit card required</span>
-          </div>
-
-          <div className="signal-site__hero-frame">
-            <SignalMarketingVideo />
-          </div>
-        </section>
-
-        <section className="signal-site__logos js-reveal">
-          <div className="signal-site__logos-title">Trusted by founders, growth operators, and strategy teams</div>
-          <div className="signal-site__logos-row">
-            {SITE_LOGOS.map((logo) => <span key={logo}>{logo}</span>)}
-          </div>
-        </section>
-
-        <section id="product" className="signal-site__section js-reveal">
-          <div className="signal-site__section-head signal-site__section-head--center">
-            <div className="signal-site__eyebrow signal-site__eyebrow--light">Power pack</div>
-            <h2>Why teams choose Signal</h2>
-            <p>Signal simplifies the commercial layer between research, positioning, pricing, and the final page.</p>
-          </div>
-          <div className="signal-site__why-grid">
-            {SITE_WHY_CARDS.map((card, index) => (
-              <article key={card.title} className="signal-site__why-card js-reveal" style={{ '--reveal-delay': `${index * 80}ms` }}>
-                <div className="signal-site__why-metric">
-                  <strong><CountUpText value={card.value} /></strong>
-                  <span>{card.metric}</span>
-                </div>
-                <h3>{card.title}</h3>
-                <p>{card.body}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section id="solution" className="signal-site__section signal-site__section--tools js-reveal">
-          <div className="signal-site__tools-layout">
-            <div className="signal-site__tools-copy">
-              <div className="signal-site__eyebrow signal-site__eyebrow--light">Key tools</div>
-              <h2>Commercial AI that moves launches forward faster.</h2>
-              <div className="signal-site__tool-tabs">
-                {SITE_TOOL_TABS.map((tab) => (
-                  <button key={tab.id} className={activeTool === tab.id ? 'is-active' : ''} onClick={() => setActiveTool(tab.id)}>
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="signal-site__tools-panel">
-              <h3>{activeToolData.title}</h3>
-              <p>{activeToolData.body}</p>
-              <MarketingMockup mode={activeToolData.mode} />
-            </div>
-          </div>
-        </section>
-
-        <section id="features" className="signal-site__section signal-site__section--dark js-reveal">
-          <div className="signal-site__dark-wrap">
-            <div className="signal-site__section-head signal-site__section-head--center">
-              <div className="signal-site__eyebrow">Core features</div>
-              <h2>What’s inside Signal?</h2>
-              <p>The product is built to make commercial decisions feel sharper, faster, and more connected.</p>
-            </div>
-            <div className="signal-site__core-grid">
-              {SITE_CORE_FEATURES.map((feature, index) => (
-                <article key={feature.title} className="signal-site__core-card js-reveal" style={{ '--reveal-delay': `${index * 70}ms` }}>
-                  <div className="signal-site__core-icon" />
-                  <h3>{feature.title}</h3>
-                  <p>{feature.body}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="analytics" className="signal-site__section js-reveal">
-          <div className="signal-site__section-head signal-site__section-head--center">
-            <h2>Advanced analytics and reporting</h2>
-            <p>Not just charts. A clearer explanation of what changed, what matters, and what to fix next.</p>
-          </div>
-          <div className="signal-site__analytics-tabs">
-            {SITE_ANALYTICS_TABS.map((tab) => (
-              <button key={tab.id} className={activeAnalytics === tab.id ? 'is-active' : ''} onClick={() => setActiveAnalytics(tab.id)}>
-                {tab.label}
-              </button>
-            ))}
-          </div>
-          <div className="signal-site__analytics-panel">
-            <div className="signal-site__analytics-copy">
-              <h3>{activeAnalyticsData.title}</h3>
-            </div>
-            <AnalyticsMock mode={activeAnalyticsData.mode} />
-          </div>
-        </section>
-
-        <section id="reviews" className="signal-site__section js-reveal">
-          <div className="signal-site__section-head signal-site__section-head--center">
-            <div className="signal-site__eyebrow signal-site__eyebrow--light">Customer reviews</div>
-            <h2>Trusted by growing companies worldwide</h2>
-          </div>
-          <div className="signal-site__testimonial-grid">
-            {SITE_TESTIMONIALS.map((item, index) => (
-              item.type === 'stat' ? (
-                <article key={`${item.value}-${index}`} className="signal-site__testimonial-stat">
-                  <strong><CountUpText value={item.value} duration={1600} /></strong>
-                  <span>{item.label}</span>
-                </article>
-              ) : (
-                <article key={item.author} className={`signal-site__testimonial-quote${item.dark ? ' is-dark' : ''}`}>
-                  <p>"{item.quote}"</p>
-                  <div>
-                    <strong>{item.author}</strong>
-                    <span>{item.role}</span>
-                  </div>
-                </article>
-              )
-            ))}
-          </div>
-        </section>
-
-        <section id="pricing" className="signal-site__section js-reveal">
-          <div className="signal-site__section-head signal-site__section-head--center">
-            <div className="signal-site__eyebrow signal-site__eyebrow--light">Pricing</div>
-            <h2>Choose the plan that matches your team.</h2>
-          </div>
-          <div className="signal-site__billing-toggle">
-            <span className={!yearly ? 'is-active' : ''}>Monthly</span>
-            <button className={`signal-site__switch${yearly ? ' is-on' : ''}`} onClick={() => setYearly((value) => !value)}>
-              <span />
-            </button>
-            <span className={yearly ? 'is-active' : ''}>Yearly</span>
-            <em>Save 20%</em>
-          </div>
-          <div className="signal-site__pricing-grid signal-site__pricing-grid--2">
-            {[
-              {
-                name: 'Starter',
-                price: yearly ? '€39' : '€49',
-                caption: 'Perfect for lean teams getting commercial clarity in place.',
-                bullets: ['Commercial research workspace', 'Page and message systems', 'Up to 5 active projects'],
-              },
-              {
-                name: 'Growth',
-                price: yearly ? '€79' : '€99',
-                caption: 'For teams that want Signal across positioning, pages, and offers.',
-                bullets: ['Unlimited projects', 'Advanced pricing and proof workflows', 'Priority support and exports'],
-                featured: true,
-              },
-            ].map((plan) => (
-              <article key={plan.name} className={`signal-site__price-card${plan.featured ? ' is-featured' : ''}`}>
-                {plan.featured ? <div className="signal-site__price-badge">Most popular</div> : null}
-                <h3>{plan.name}</h3>
-                <p>{plan.caption}</p>
-                <div className="signal-site__price-value"><CountUpText value={plan.price} duration={1500} /><small>/mo</small></div>
-                <button className={plan.featured ? 'signal-site__cta-btn' : 'signal-site__outline-btn'}>Start 14-day trial</button>
-                <ul>
-                  {plan.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section id="faq" className="signal-site__section js-reveal">
-          <div className="signal-site__faq-layout">
-            <div>
-              <div className="signal-site__eyebrow signal-site__eyebrow--light">FAQ</div>
-              <h2>Frequently asked questions</h2>
-              <p className="signal-site__faq-intro">Get clear answers before you commit your team to a new commercial system.</p>
-            </div>
-            <div className="signal-site__faq-list">
-              {SITE_FAQ.map((item) => {
-                const isOpen = openFaq === item.q;
-                return (
-                  <article key={item.q} className={`signal-site__faq-item${isOpen ? ' is-open' : ''}`}>
-                    <button onClick={() => setOpenFaq(isOpen ? null : item.q)}>
-                      <span>{item.q}</span>
-                      <span>{isOpen ? '−' : '+'}</span>
-                    </button>
-                    {isOpen ? <p>{item.a}</p> : null}
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section id="contact" className="signal-site__section signal-site__section--cta js-reveal">
-          <div className="signal-site__final-cta">
-            <h2>Try Signal free for 14 days</h2>
-            <p>Start building a clearer commercial system for your launches, pages, and offers today.</p>
-            <button className="signal-site__cta-btn signal-site__cta-btn--lg">Get 14 Days Free Trial</button>
-          </div>
-          <footer className="signal-site__footer">
-            <div className="signal-site__footer-brand">
-              <div className="signal-site__brand">
-                <span className="signal-site__brand-mark">S</span>
-                <span>Signal</span>
-              </div>
-              <p>Signal helps teams move from research noise to sharper positioning, pricing, and launch execution.</p>
-            </div>
-            <div className="signal-site__footer-columns">
-              <div>
-                <strong>Product</strong>
-                <span>Research</span>
-                <span>Messaging</span>
-                <span>Pricing</span>
-              </div>
-              <div>
-                <strong>Resources</strong>
-                <span>Case studies</span>
-                <span>Guides</span>
-                <span>Contact</span>
-              </div>
-              <div>
-                <strong>Company</strong>
-                <span>About</span>
-                <span>Privacy</span>
-                <span>Terms</span>
-              </div>
-            </div>
-          </footer>
-        </section>
-          </>
-        )}
-      </main>
+    <div style={{
+      background: 'white',
+      minHeight: '100vh',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    }}>
+      <MarketingHeader onCTA={handleCTA} />
+      <HeroSection onCTA={handleCTA} />
+      <CredibilityStrip />
+      <WhatYouGetSection />
+      <HowItWorksSection />
+      <ProductModulesSection />
+      <UseCasesSection />
+      <PositioningSection />
+      <TestimonialsSection />
+      <PricingSection onCTA={handleCTA} />
+      <FAQSection />
+      <FinalCTASection onCTA={handleCTA} />
+      <MarketingFooter />
     </div>
   );
 }
@@ -1001,4 +1113,4 @@ function HomeScreen({ setRoute }) {
   return <MarketingLanding setRoute={setRoute} />;
 }
 
-Object.assign(window, { HomeScreen, MarketingLanding, openStandaloneSite });
+Object.assign(window, { HomeScreen, MarketingLanding });

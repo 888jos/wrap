@@ -43,7 +43,12 @@
       "Bash(cat /Users/jos/wrap/index.html)",
       "Bash(git rm Shipshot.html Shipshot-standalone.html)",
       "Bash(git commit -m \"Remove old Babel-based HTML files - use Vite build only\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
-      "Bash(git commit -m \"Remove .vercelignore - let Vercel handle defaults\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")"
+      "Bash(git commit -m \"Remove .vercelignore - let Vercel handle defaults\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
+      "Bash(curl -s \"https://signal-pteja9qew-888jos-projects.vercel.app/api/health\")",
+      "Bash(npm run dev)",
+      "Bash(git add components/wrap-screens.jsx)",
+      "Bash(git commit -m \"Add beautiful import progress modal with animated steps\n\n- Create ImportProgressModal component with centered popup\n- Show app name and icon during import\n- Display 7 progressive steps with green checkmarks\n- Animate steps one by one (loading → completed)\n- Smooth fadeIn/slideUp animations\n- Replace inline button loading text with full modal\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
+      "Bash(git commit -m \"$(cat <<''EOF''\nRebuild complete marketing landing page for Signal\n\nComplete rewrite of home.jsx with app growth/ASO positioning:\n- Light theme (white backgrounds, #F4621F orange accent)\n- MarketingHeader with Product/Use Cases/Pricing/Resources dropdowns\n- Hero section with \"Find the signal. Build what matters.\"\n- 11 comprehensive sections:\n  • Credibility strip with trusted brands\n  • What You Get (3 core value props)\n  • How It Works (3-step process)\n  • Product Modules (6 feature cards)\n  • Use Cases (3 detailed scenarios)\n  • Positioning (compare vs competitors/community/intuition)\n  • Testimonials (3 customer quotes)\n  • Pricing (Starter/Pro/Enterprise tiers)\n  • FAQ (9 questions with accordion)\n  • Final CTA section\n  • Footer with links\n- Premium SaaS aesthetic inspired by Linear/Vercel\n- All CTAs route to onboarding screen\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
