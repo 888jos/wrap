@@ -132,7 +132,7 @@ function MarketingHeader({ onCTA }) {
         padding: '16px 24px',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        gap: 48,
       }}>
         {/* Logo */}
         <div style={{
@@ -156,7 +156,7 @@ function MarketingHeader({ onCTA }) {
         </div>
 
         {/* Nav */}
-        <nav style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
+        <nav style={{ display: 'flex', gap: 32, alignItems: 'center', flex: 1 }}>
           <div style={{ position: 'relative' }}>
             <button
               style={{
@@ -183,12 +183,12 @@ function MarketingHeader({ onCTA }) {
                   border: '1px solid rgba(0,0,0,0.1)',
                   borderRadius: 12,
                   padding: '24px',
-                  minWidth: 680,
+                  minWidth: 900,
                   boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
                   marginTop: 4,
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(2, 1fr)',
-                  gap: 32,
+                  gridTemplateColumns: 'repeat(4, 1fr)',
+                  gap: 24,
                   animation: 'fadeIn 0.2s ease-out',
                 }}
                 onMouseEnter={() => setDropdownOpen('product')}
@@ -279,6 +279,8 @@ function MarketingHeader({ onCTA }) {
 
           <a href="#pricing" style={{ fontSize: 15, color: '#444', fontWeight: 500, textDecoration: 'none' }}>Pricing</a>
 
+          <a href="#contact" style={{ fontSize: 15, color: '#444', fontWeight: 500, textDecoration: 'none' }}>Contact</a>
+
           <div style={{ position: 'relative' }}>
             <button
               style={{
@@ -339,6 +341,7 @@ function MarketingHeader({ onCTA }) {
               fontSize: 15,
               fontWeight: 600,
               cursor: 'pointer',
+              marginLeft: 'auto',
             }}
           >
             Start for free
