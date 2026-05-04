@@ -2569,7 +2569,7 @@ function WrapOnboardingScreen({ setRoute }) {
                 <input className="input" value={appUrl} onChange={(event) => setAppUrl(event.target.value)} placeholder="https://apps.apple.com/... or https://play.google.com/store/apps/details?id=..." />
               </div>
               <button className="btn primary" onClick={connectExistingApp} disabled={loadingConnection || !appUrl.trim()}>
-                {loadingConnection ? 'Importing metadata…' : 'Import app metadata'}
+                Import app metadata
               </button>
               {connectedApp ? (
                 <div className="card" style={{ padding: 14, background: 'var(--bg-2)', border: '1px solid var(--border-1)' }}>
