@@ -1,11 +1,43 @@
 /* Marketing landing for Signal - App Growth Workspace */
 
-const PRODUCT_FEATURES = [
-  { id: 'opportunity-finder', label: 'Opportunity Finder', detail: 'Spot keywords you can actually rank for and gaps competitors missed.' },
-  { id: 'keyword-intelligence', label: 'Keyword Intelligence', detail: 'Expand keywords, track rankings, and understand search intent.' },
-  { id: 'competitor-analysis', label: 'Competitor Analysis', detail: 'See positioning pressure, creative patterns, and market overlap.' },
-  { id: 'screenshot-builder', label: 'Screenshot Builder', detail: 'Turn insights into screenshot projects and creative direction.' },
-  { id: 'idea-validator', label: 'Idea Validator', detail: 'Validate app concepts before writing a single line of code.' },
+const PRODUCT_CATEGORIES = [
+  {
+    id: 'discover',
+    label: 'Discover',
+    items: [
+      { id: 'trending', label: 'Trending Apps', detail: 'See what\'s rising in the charts' },
+      { id: 'hot-ideas', label: 'Hot Ideas', detail: 'Find validated app concepts' },
+      { id: 'idea-validator', label: 'Idea Validator', detail: 'Test ideas before building' },
+    ],
+  },
+  {
+    id: 'analyze',
+    label: 'Analyze',
+    items: [
+      { id: 'keyword-explorer', label: 'Keyword Explorer', detail: 'Expand and track search terms' },
+      { id: 'aso-analyzer', label: 'ASO Analyzer', detail: 'Review metadata and listing health' },
+      { id: 'competitors', label: 'Competitor Analysis', detail: 'Benchmark against rivals' },
+      { id: 'reviews', label: 'Reviews', detail: 'Extract pain points from users' },
+    ],
+  },
+  {
+    id: 'track',
+    label: 'Track',
+    items: [
+      { id: 'app-tracking', label: 'App Tracking', detail: 'Monitor rankings and visibility' },
+      { id: 'rank-history', label: 'Rank History', detail: 'Track performance over time' },
+      { id: 'market-insights', label: 'Market Insights', detail: 'Understand market trends' },
+    ],
+  },
+  {
+    id: 'create',
+    label: 'Create',
+    items: [
+      { id: 'screenshots', label: 'Screenshot Generator', detail: 'Create store visuals' },
+      { id: 'my-projects', label: 'Projects', detail: 'Turn insights into deliverables' },
+      { id: 'templates', label: 'Creative Systems', detail: 'Design templates and themes' },
+    ],
+  },
 ];
 
 const USE_CASES = [
@@ -150,24 +182,48 @@ function MarketingHeader({ onCTA }) {
                   background: 'white',
                   border: '1px solid rgba(0,0,0,0.1)',
                   borderRadius: 12,
-                  padding: '12px 0',
-                  minWidth: 240,
+                  padding: '24px',
+                  minWidth: 680,
                   boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
                   marginTop: 4,
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gap: 32,
+                  animation: 'fadeIn 0.2s ease-out',
                 }}
                 onMouseEnter={() => setDropdownOpen('product')}
                 onMouseLeave={() => setDropdownOpen(null)}
               >
-                {PRODUCT_FEATURES.map(item => (
-                  <a key={item.id} href={`#${item.id}`} style={{
-                    display: 'block',
-                    padding: '10px 20px',
-                    textDecoration: 'none',
-                    color: '#111',
-                  }}>
-                    <div style={{ fontWeight: 600, fontSize: 14 }}>{item.label}</div>
-                    <div style={{ fontSize: 12, color: '#666', marginTop: 2 }}>{item.detail}</div>
-                  </a>
+                {PRODUCT_CATEGORIES.map(category => (
+                  <div key={category.id}>
+                    <div style={{
+                      fontSize: 11,
+                      fontWeight: 700,
+                      color: '#F4621F',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.08em',
+                      marginBottom: 12,
+                    }}>
+                      {category.label}
+                    </div>
+                    {category.items.map(item => (
+                      <a key={item.id} href={`#${item.id}`} style={{
+                        display: 'block',
+                        padding: '8px 12px',
+                        textDecoration: 'none',
+                        color: '#111',
+                        borderRadius: 8,
+                        transition: 'background 0.15s ease',
+                        marginBottom: 4,
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.background = 'rgba(244, 98, 31, 0.08)'}
+                      onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                      >
+                        <div style={{ fontWeight: 600, fontSize: 14 }}>{item.label}</div>
+                        <div style={{ fontSize: 12, color: '#666', marginTop: 2 }}>{item.detail}</div>
+                      </a>
+                    ))}
+                  </div>
                 ))}
               </div>
             )}
@@ -308,6 +364,7 @@ function HeroSection({ onCTA }) {
           marginBottom: 24,
           color: '#111',
           letterSpacing: '-0.03em',
+          animation: 'slideUp 0.6s ease-out',
         }}>
           Find the signal.<br />
           Build what matters.
@@ -320,11 +377,12 @@ function HeroSection({ onCTA }) {
           marginBottom: 48,
           maxWidth: 720,
           margin: '0 auto 48px',
+          animation: 'slideUp 0.6s ease-out 0.1s both',
         }}>
           Stop guessing what to build or optimize. Signal turns any app — or idea — into clear opportunities, keywords, competitors, and assets you can ship.
         </p>
 
-        <div style={{ display: 'flex', gap: 16, justifyContent: 'center', marginBottom: 16 }}>
+        <div style={{ display: 'flex', gap: 16, justifyContent: 'center', marginBottom: 16, animation: 'slideUp 0.6s ease-out 0.2s both' }}>
           <button
             onClick={onCTA}
             style={{
@@ -1021,12 +1079,12 @@ function MarketingFooter() {
     }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: 48,
+          display: 'flex',
+          gap: 80,
           marginBottom: 60,
+          flexWrap: 'wrap',
         }}>
-          <div>
+          <div style={{ minWidth: 240 }}>
             <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 16 }}>Signal</div>
             <p style={{ fontSize: 14, color: '#888', lineHeight: 1.6 }}>
               App growth workspace for indie makers and small teams.
@@ -1035,7 +1093,7 @@ function MarketingFooter() {
 
           <div>
             <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 16, opacity: 0.5 }}>PRODUCT</div>
-            {PRODUCT_FEATURES.map(item => (
+            {PRODUCT_CATEGORIES.flatMap(cat => cat.items).slice(0, 5).map(item => (
               <div key={item.id} style={{ fontSize: 14, color: '#aaa', marginBottom: 8 }}>
                 {item.label}
               </div>
@@ -1059,6 +1117,15 @@ function MarketingFooter() {
               </div>
             ))}
           </div>
+
+          <div>
+            <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 16, opacity: 0.5 }}>COMPANY</div>
+            {['About', 'Contact', 'Careers'].map(item => (
+              <div key={item} style={{ fontSize: 14, color: '#aaa', marginBottom: 8 }}>
+                {item}
+              </div>
+            ))}
+          </div>
         </div>
 
         <div style={{
@@ -1073,6 +1140,7 @@ function MarketingFooter() {
           <div style={{ display: 'flex', gap: 24 }}>
             <a href="#" style={{ color: '#666', textDecoration: 'none' }}>Privacy</a>
             <a href="#" style={{ color: '#666', textDecoration: 'none' }}>Terms</a>
+            <a href="#" style={{ color: '#666', textDecoration: 'none' }}>Contact</a>
           </div>
         </div>
       </div>
