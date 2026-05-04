@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.mjs",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "Shipshot.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server.mjs"
+    },
+    {
+      "src": "/(.*\\.(html|css|jsx|js|png|jpg|svg|webp))",
+      "dest": "/$1"
+    },
+    {
+      "src": "/",
+      "dest": "/Shipshot.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/Shipshot.html"
+    }
+  ]
+}
