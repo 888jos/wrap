@@ -36,7 +36,9 @@
       "Bash(git commit -m \"Remove vercel.json - use static hosting for Shipshot.html\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
       "Bash(git commit -m \"Add Vercel config for Signal Node.js API + static frontend\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
       "Bash(git commit -m \"WIP: Restructure for Vercel deployment\")",
-      "Bash(git commit -m \"Add Vercel serverless API with Apple App Store integration\n\n- Create /api/[...path].js serverless function\n- Support /api/health endpoint\n- Support /api/apple/charts for App Store rankings\n- Support /api/idea-validator/research (mock for now)\n- Simplify vercel.json routing\n- Ready for scalable deployment\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")"
+      "Bash(git commit -m \"Add Vercel serverless API with Apple App Store integration\n\n- Create /api/[...path].js serverless function\n- Support /api/health endpoint\n- Support /api/apple/charts for App Store rankings\n- Support /api/idea-validator/research (mock for now)\n- Simplify vercel.json routing\n- Ready for scalable deployment\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
+      "Bash(npm run build)",
+      "Bash(git commit -m \"Fix index.html for Vite build - proper module entry point\n\n- Replace Babel-based index.html with Vite entry\n- Use main.jsx as module entry point\n- All components now properly bundled\n- Ready for production deployment\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")"
     ],
     "deny": [],
     "ask": []
