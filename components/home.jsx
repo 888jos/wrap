@@ -758,39 +758,212 @@ function TestimonialsSection() {
   return (
     <section style={{
       padding: '120px 24px',
-      background: 'white',
+      background: '#f8f8f8',
     }}>
-      <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: 24 }}>
+          <span style={{
+            display: 'inline-block',
+            background: 'rgba(244, 98, 31, 0.1)',
+            color: '#F4621F',
+            padding: '6px 16px',
+            borderRadius: 9999,
+            fontSize: 13,
+            fontWeight: 600,
+          }}>
+            ● Customer Reviews
+          </span>
+        </div>
+
         <h2 style={{
-          fontSize: 36,
-          fontWeight: 700,
+          fontSize: 48,
+          fontWeight: 800,
           textAlign: 'center',
-          marginBottom: 60,
+          marginBottom: 16,
           color: '#111',
         }}>
-          Early founder feedback
+          Trusted by 2500+ companies
         </h2>
+
+        <p style={{
+          fontSize: 16,
+          textAlign: 'center',
+          color: '#666',
+          maxWidth: 600,
+          margin: '0 auto 64px',
+        }}>
+          Trusted by over 2,500 companies worldwide, we take pride in delivering reliable solutions that drive real results
+        </p>
 
         <div style={{
           display: 'grid',
-          gap: 32,
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: 24,
         }}>
-          {[
-            "Signal helped me turn a vague app idea into a concrete launch plan.",
-            "Instead of staring at ASO data, I finally knew what to do next.",
-            "This feels less like a dashboard and more like a growth workspace."
-          ].map((quote, i) => (
-            <div key={i} style={{
-              background: '#fafafa',
-              borderRadius: 16,
-              padding: 32,
-              fontSize: 18,
-              fontStyle: 'italic',
+          {/* Testimonial card 1 */}
+          <div style={{
+            background: 'white',
+            borderRadius: 16,
+            padding: 32,
+            border: '1px solid rgba(0,0,0,0.06)',
+          }}>
+            <div style={{
+              fontSize: 16,
+              lineHeight: 1.6,
               color: '#333',
+              marginBottom: 24,
             }}>
-              "{quote}"
+              "Signal helped me turn a vague app idea into a concrete launch plan."
             </div>
-          ))}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{
+                width: 48,
+                height: 48,
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              }} />
+              <div>
+                <div style={{ fontWeight: 600, fontSize: 14 }}>James Carter</div>
+                <div style={{ fontSize: 13, color: '#888' }}>Founder & CEO</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Stats card */}
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(255, 182, 193, 0.2) 0%, rgba(255, 218, 185, 0.2) 100%)',
+            borderRadius: 16,
+            padding: 40,
+            border: '1px solid rgba(0,0,0,0.06)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <div style={{
+              fontSize: 72,
+              fontWeight: 800,
+              color: '#111',
+              marginBottom: 8,
+            }}>
+              10X
+            </div>
+            <div style={{ fontSize: 15, color: '#666', fontWeight: 500 }}>
+              More insights
+            </div>
+          </div>
+
+          {/* Testimonial card 2 */}
+          <div style={{
+            background: 'white',
+            borderRadius: 16,
+            padding: 32,
+            border: '1px solid rgba(0,0,0,0.06)',
+          }}>
+            <div style={{
+              fontSize: 16,
+              lineHeight: 1.6,
+              color: '#333',
+              marginBottom: 24,
+            }}>
+              "Instead of staring at ASO data, I finally knew what to do next."
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{
+                width: 48,
+                height: 48,
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+              }} />
+              <div>
+                <div style={{ fontWeight: 600, fontSize: 14 }}>William Harris</div>
+                <div style={{ fontSize: 13, color: '#888' }}>Growth Lead</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Stats card 2 */}
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(250, 112, 154, 0.2) 0%, rgba(254, 225, 64, 0.2) 100%)',
+            borderRadius: 16,
+            padding: 40,
+            border: '1px solid rgba(0,0,0,0.06)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <div style={{
+              fontSize: 72,
+              fontWeight: 800,
+              color: '#111',
+              marginBottom: 8,
+            }}>
+              3X
+            </div>
+            <div style={{ fontSize: 15, color: '#666', fontWeight: 500 }}>
+              Faster shipping
+            </div>
+          </div>
+
+          {/* Testimonial card 3 */}
+          <div style={{
+            background: 'white',
+            borderRadius: 16,
+            padding: 32,
+            border: '1px solid rgba(0,0,0,0.06)',
+          }}>
+            <div style={{
+              fontSize: 16,
+              lineHeight: 1.6,
+              color: '#333',
+              marginBottom: 24,
+            }}>
+              "This feels less like a dashboard and more like a growth workspace."
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{
+                width: 48,
+                height: 48,
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+              }} />
+              <div>
+                <div style={{ fontWeight: 600, fontSize: 14 }}>Matthew Brooks</div>
+                <div style={{ fontSize: 13, color: '#888' }}>Indie Maker</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Testimonial card 4 - spanning 2 columns */}
+          <div style={{
+            background: 'white',
+            borderRadius: 16,
+            padding: 32,
+            border: '1px solid rgba(0,0,0,0.06)',
+            gridColumn: 'span 2',
+          }}>
+            <div style={{
+              fontSize: 16,
+              lineHeight: 1.6,
+              color: '#333',
+              marginBottom: 24,
+            }}>
+              "We used Signal to validate our app idea before building. The competitor analysis and keyword research saved us months of guesswork."
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{
+                width: 48,
+                height: 48,
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+              }} />
+              <div>
+                <div style={{ fontWeight: 600, fontSize: 14 }}>Daniel Parker</div>
+                <div style={{ fontSize: 13, color: '#888' }}>Product Manager</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -798,43 +971,35 @@ function TestimonialsSection() {
 }
 
 function PricingSection({ onCTA }) {
+  const [billingPeriod, setBillingPeriod] = React.useState('monthly');
+
   const plans = [
     {
-      name: 'Starter',
-      subtitle: 'For indie makers getting started',
+      name: 'Basic',
+      price: billingPeriod === 'monthly' ? 29 : 23,
+      subtitle: 'Perfect for small teams who want to simplify their financial workflows',
       features: [
-        '1 app workspace',
-        'Idea validation',
-        'Basic keyword research',
-        'Screenshot project starter',
+        'Smart invoicing & tracking',
+        'Automated bank sync',
+        'Real-time financial dashboard',
+        'Custom budget reports',
       ],
-      cta: 'Start for free',
+      cta: 'Get Started Now',
       highlight: false,
     },
     {
-      name: 'Growth',
-      subtitle: 'For apps that want traction',
+      name: 'Unlimited',
+      label: 'Unlimited',
+      price: billingPeriod === 'monthly' ? 59 : 47,
+      subtitle: 'Ideal for growing businesses that need advanced automation',
       features: [
-        'Multiple app workspaces',
-        'Keyword tracking',
-        'Competitor analysis',
-        'Review insights',
-        'Screenshot generation',
+        'AI driven financial forecasting',
+        'Multi-account management',
+        'Advanced analytics & reporting',
+        'Automated tax summaries',
       ],
-      cta: 'Start for free',
+      cta: 'Get Started Now',
       highlight: true,
-    },
-    {
-      name: 'Pro',
-      subtitle: 'For teams that scale',
-      features: [
-        'Team workspaces',
-        'Advanced reports',
-        'Export packs',
-        'Priority workflows',
-      ],
-      cta: 'Contact us',
-      highlight: false,
     },
   ];
 
@@ -843,106 +1008,248 @@ function PricingSection({ onCTA }) {
       padding: '120px 24px',
       background: '#fafafa',
     }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: 24 }}>
+          <span style={{
+            display: 'inline-block',
+            background: 'rgba(244, 98, 31, 0.1)',
+            color: '#F4621F',
+            padding: '6px 16px',
+            borderRadius: 9999,
+            fontSize: 13,
+            fontWeight: 600,
+            marginBottom: 24,
+          }}>
+            ● Pricing
+          </span>
+        </div>
+
         <h2 style={{
-          fontSize: 48,
+          fontSize: 56,
           fontWeight: 800,
           textAlign: 'center',
-          marginBottom: 80,
+          marginBottom: 48,
           color: '#111',
         }}>
-          Simple pricing. No surprises.
+          Choose the perfect plan
         </h2>
 
         <div style={{
+          display: 'flex',
+          gap: 12,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom: 64,
+        }}>
+          <button
+            onClick={() => setBillingPeriod('monthly')}
+            style={{
+              background: 'none',
+              border: 'none',
+              fontSize: 16,
+              fontWeight: 600,
+              color: billingPeriod === 'monthly' ? '#111' : '#888',
+              cursor: 'pointer',
+              padding: '8px 16px',
+            }}
+          >
+            Monthly
+          </button>
+          <div style={{
+            width: 48,
+            height: 24,
+            background: billingPeriod === 'yearly' ? '#F4621F' : '#ddd',
+            borderRadius: 9999,
+            position: 'relative',
+            cursor: 'pointer',
+            transition: 'background 0.2s',
+          }}
+          onClick={() => setBillingPeriod(billingPeriod === 'monthly' ? 'yearly' : 'monthly')}
+          >
+            <div style={{
+              position: 'absolute',
+              width: 20,
+              height: 20,
+              background: 'white',
+              borderRadius: '50%',
+              top: 2,
+              left: billingPeriod === 'yearly' ? 26 : 2,
+              transition: 'left 0.2s',
+            }} />
+          </div>
+          <button
+            onClick={() => setBillingPeriod('yearly')}
+            style={{
+              background: 'none',
+              border: 'none',
+              fontSize: 16,
+              fontWeight: 600,
+              color: billingPeriod === 'yearly' ? '#111' : '#888',
+              cursor: 'pointer',
+              padding: '8px 16px',
+            }}
+          >
+            Yearly
+          </button>
+          {billingPeriod === 'yearly' && (
+            <span style={{
+              background: 'rgba(244, 98, 31, 0.15)',
+              color: '#F4621F',
+              padding: '4px 12px',
+              borderRadius: 9999,
+              fontSize: 13,
+              fontWeight: 700,
+            }}>
+              SAVE 20%
+            </span>
+          )}
+        </div>
+
+        <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gridTemplateColumns: 'repeat(2, 1fr)',
           gap: 32,
+          maxWidth: 900,
+          margin: '0 auto',
         }}>
           {plans.map(plan => (
             <div key={plan.name} style={{
-              background: 'white',
-              border: plan.highlight ? '2px solid #F4621F' : '1px solid rgba(0,0,0,0.1)',
-              borderRadius: 24,
+              background: plan.highlight ? 'linear-gradient(135deg, rgba(135, 206, 250, 0.15) 0%, rgba(255, 182, 193, 0.15) 100%)' : 'white',
+              border: '1px solid rgba(0,0,0,0.08)',
+              borderRadius: 20,
               padding: 40,
               position: 'relative',
             }}>
-              {plan.highlight && (
+              {plan.label && (
                 <div style={{
                   position: 'absolute',
-                  top: -12,
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  background: '#F4621F',
-                  color: 'white',
-                  padding: '4px 16px',
-                  borderRadius: 9999,
-                  fontSize: 12,
+                  top: 24,
+                  right: 24,
+                  color: '#F4621F',
+                  fontSize: 13,
                   fontWeight: 700,
                 }}>
-                  MOST POPULAR
+                  {plan.label}
                 </div>
               )}
 
               <h3 style={{
-                fontSize: 28,
-                fontWeight: 800,
-                marginBottom: 8,
+                fontSize: 20,
+                fontWeight: 700,
+                marginBottom: 16,
                 color: '#111',
               }}>
                 {plan.name}
               </h3>
 
+              <div style={{
+                fontSize: 48,
+                fontWeight: 800,
+                marginBottom: 8,
+                color: '#111',
+              }}>
+                ${plan.price}
+                <span style={{ fontSize: 18, fontWeight: 500, color: '#666' }}>/month</span>
+              </div>
+
               <p style={{
-                fontSize: 15,
+                fontSize: 14,
                 color: '#666',
                 marginBottom: 32,
+                lineHeight: 1.5,
               }}>
                 {plan.subtitle}
               </p>
-
-              <ul style={{
-                listStyle: 'none',
-                padding: 0,
-                margin: '0 0 32px 0',
-              }}>
-                {plan.features.map(feature => (
-                  <li key={feature} style={{
-                    fontSize: 15,
-                    color: '#333',
-                    marginBottom: 12,
-                    paddingLeft: 24,
-                    position: 'relative',
-                  }}>
-                    <span style={{
-                      position: 'absolute',
-                      left: 0,
-                      color: '#22c55e',
-                      fontWeight: 700,
-                    }}>✓</span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
 
               <button
                 onClick={onCTA}
                 style={{
                   width: '100%',
-                  background: plan.highlight ? '#F4621F' : 'white',
-                  color: plan.highlight ? 'white' : '#333',
-                  border: plan.highlight ? 'none' : '1px solid #ddd',
-                  padding: '14px 24px',
+                  background: '#111',
+                  color: 'white',
+                  border: 'none',
+                  padding: '16px 24px',
                   borderRadius: 9999,
-                  fontSize: 16,
+                  fontSize: 15,
                   fontWeight: 600,
                   cursor: 'pointer',
+                  marginBottom: 32,
                 }}
               >
                 {plan.cta}
               </button>
+
+              <ul style={{
+                listStyle: 'none',
+                padding: 0,
+                margin: 0,
+              }}>
+                {plan.features.map(feature => (
+                  <li key={feature} style={{
+                    fontSize: 14,
+                    color: '#333',
+                    marginBottom: 14,
+                    paddingLeft: 28,
+                    position: 'relative',
+                  }}>
+                    <span style={{
+                      position: 'absolute',
+                      left: 0,
+                      width: 20,
+                      height: 20,
+                      borderRadius: '50%',
+                      border: '2px solid #111',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 12,
+                    }}>✓</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
+        </div>
+
+        <div style={{
+          textAlign: 'center',
+          marginTop: 64,
+          padding: '40px',
+          background: 'white',
+          borderRadius: 16,
+          border: '1px solid rgba(0,0,0,0.08)',
+        }}>
+          <h3 style={{
+            fontSize: 24,
+            fontWeight: 700,
+            marginBottom: 12,
+            color: '#111',
+          }}>
+            Looking for enterprise solutions?
+          </h3>
+          <p style={{
+            fontSize: 15,
+            color: '#666',
+            marginBottom: 24,
+          }}>
+            Contact us for a custom quote
+          </p>
+          <button
+            onClick={onCTA}
+            style={{
+              background: '#111',
+              color: 'white',
+              border: 'none',
+              padding: '14px 32px',
+              borderRadius: 9999,
+              fontSize: 15,
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >
+            Contact us
+          </button>
         </div>
       </div>
     </section>
